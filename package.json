@@ -1,0 +1,23 @@
+{
+  "name": "l-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "xxv": "bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^6.2.0",
+    "fs-extra": "^10.0.0",
+    "inquirer": "^8.2.0",
+    "minimist": "^1.2.5",
+    "ora": "^6.0.1"
+  }
+}

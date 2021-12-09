@@ -11,15 +11,15 @@ const isManualMode = answers => answers.preset === '__manual__'
 module.exports = class Creator {
     constructor(name, context, promptModules) {
         this.name = name
-        // 获取问答
-        const {presetPrompt, featurePrompt} = this.resolveIntroPrompts()
-        this.presetPrompt = presetPrompt
-        this.featurePrompt = featurePrompt
+
         this.injectedPrompts = []
         this.outroPrompts = []
         this.promptCompleteCbs = []
-
-        // 把 presetPrompt, featurePrompt问答 传进 PromptModuleAPI 注入注册
+        // 建立问答
+        const {presetPrompt, featurePrompt} = this.resolveIntroPrompts()
+        this.presetPrompt = presetPrompt
+        this.featurePrompt = featurePrompt
+        // 把 presetPrompt, featurePrompt问答 传进 ResolveMultistage 注入注册
         const promptAPI = new ResolveMultistage(this)
         promptModules.forEach(m => m(promptAPI))
     }
@@ -44,15 +44,24 @@ module.exports = class Creator {
             // await clearConsole(true);
             answers = await inquirer.prompt(this.resolveFinalPrompts())
         }
+        console.log('answers=',answers);
     }
 
     resolveFinalPrompts() {
+        console.log('injectedPrompts=',this.injectedPrompts);
+        //  这里需要更改的原因是防止选择 默认配置 问答报错
         this.injectedPrompts.forEach(prompt => {
             const originalWhen = prompt.when || (() => true)
             prompt.when = answers => {
                 return isManualMode(answers) && originalWhen(answers)
             }
         })
+        console.log([
+            this.presetPrompt,
+            this.featurePrompt,
+            ...this.injectedPrompts,
+            ...this.outroPrompts
+        ]);
         return [
             this.presetPrompt,
             this.featurePrompt,
@@ -69,10 +78,18 @@ module.exports = class Creator {
     resolveIntroPrompts() {
         const presets = this.getPresets();
         const presetChoices = Object.entries(presets).map(([name, preset]) => {
-            let displayName = name
+            let displayName;
             switch (name){
                 case 'u_earth':
-                    displayName = 'u_earth (vite + Vue 3 地图项目)'
+                    displayName = 'u_earth (vite + Vue 3 地图项目)';
+                    this.injectedPrompts.push({
+                        name: 'select spray',
+                        when: true,
+                        type: 'confirm',
+                        message: `是否配置spray来控制自适应布局?`,
+                        description: `一个构建自适应布局可视化场景的组件包`,
+                        link: 'https://www.yuque.com/khth0u/ngd5zk'
+                    })
                     break;
                 default:
                     displayName = 'Default (vite + Vue 3 园区项目)'
@@ -83,7 +100,8 @@ module.exports = class Creator {
                 value: name
             }
         })
-
+        // console.log('presetChoices=',presetChoices);
+        //第一个问答
         const presetPrompt = {
             name: 'preset',
             type: 'list',
@@ -96,6 +114,7 @@ module.exports = class Creator {
                 }
             ]
         }
+
         const featurePrompt = {
             name: 'features',
             when: isManualMode,

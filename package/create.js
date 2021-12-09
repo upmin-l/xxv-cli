@@ -41,6 +41,7 @@ module.exports = async (projectName, options) => {
     if (fs.existsSync(targetDir)) {
         console.log('存在 ')
     }
+    // getPackageModules 获取 手动选择配置项 item  返回可执行函数
     const creator = new Creator(name, targetDir, getPackageModules())
     await creator.create(options)
 }

@@ -4,16 +4,15 @@
  * @param context
  * @param promptModules  返回一个数组，每个元素都是一个可执行函数，由createTools文件(getPromptModules)传入进来
  */
-const {defaults, loadOptions} = require("./options");
+const {defaults, loadOptions, savePreset} = require("./options");
 const inquirer = require('inquirer')
 const ResolveMultistage = require("./ResolveMultistage");
 const isManualMode = answers => answers.preset === '__manual__'
 module.exports = class Creator {
     constructor(name, context, promptModules) {
         this.name = name
-
         this.injectedPrompts = []
-        this.outroPrompts = []
+        this.savePrompts = this.resolveSavePrompts()
         this.promptCompleteCbs = []
         // 建立问答
         const {presetPrompt, featurePrompt} = this.resolveIntroPrompts()
@@ -33,7 +32,8 @@ module.exports = class Creator {
             } else if (cliOptions.inlinePreset) {
 
             } else {
-                preset = await this.promptAndResolvePreset()
+                preset = await this.promptAndResolvePreset();
+                console.log('preset=', preset);
             }
         }
     }
@@ -44,11 +44,28 @@ module.exports = class Creator {
             // await clearConsole(true);
             answers = await inquirer.prompt(this.resolveFinalPrompts())
         }
-        console.log('answers=',answers);
+        console.log('answers=', answers);
+        let preset;
+        if (answers.preset && answers.preset !== '__manual__') {
+            preset = await this.resolvePreset(answers.preset)
+        } else {
+            // 手动选择
+            preset = {
+                useConfigFiles: answers.useConfigFiles === 'files',
+                plugins: {}
+            }
+            answers.features = answers.features || []
+            // run cb registered by prompt modules to finalize the preset
+            this.promptCompleteCbs.forEach(cb => cb(answers, preset))
+        }
+        if (answers.save && answers.saveName) {
+            savePreset(answers.saveName, preset)
+        }
+        return preset
     }
 
     resolveFinalPrompts() {
-        console.log('injectedPrompts=',this.injectedPrompts);
+        console.log('injectedPrompts=', this.injectedPrompts);
         //  这里需要更改的原因是防止选择 默认配置 问答报错
         this.injectedPrompts.forEach(prompt => {
             const originalWhen = prompt.when || (() => true)
@@ -56,51 +73,40 @@ module.exports = class Creator {
                 return isManualMode(answers) && originalWhen(answers)
             }
         })
-        console.log([
-            this.presetPrompt,
-            this.featurePrompt,
-            ...this.injectedPrompts,
-            ...this.outroPrompts
-        ]);
         return [
             this.presetPrompt,
             this.featurePrompt,
             ...this.injectedPrompts,
-            ...this.outroPrompts
+            ...this.savePrompts
         ]
     }
 
     getPresets() {
-        const savedOptions = loadOptions()
+        const savedOptions = loadOptions();
         return Object.assign({}, savedOptions.presets, defaults.presets)
     }
 
     resolveIntroPrompts() {
         const presets = this.getPresets();
+        console.log(presets);
         const presetChoices = Object.entries(presets).map(([name, preset]) => {
             let displayName;
-            switch (name){
+            switch (name) {
                 case 'u_earth':
                     displayName = 'u_earth (vite + Vue 3 地图项目)';
-                    this.injectedPrompts.push({
-                        name: 'select spray',
-                        when: true,
-                        type: 'confirm',
-                        message: `是否配置spray来控制自适应布局?`,
-                        description: `一个构建自适应布局可视化场景的组件包`,
-                        link: 'https://www.yuque.com/khth0u/ngd5zk'
-                    })
+                    break;
+                case 'default':
+                    displayName = 'Default (vite + Vue 3 园区项目)'
                     break;
                 default:
-                    displayName = 'Default (vite + Vue 3 园区项目)'
+                    displayName =`${name} ()`
                     break
             }
             return {
-                name: `${displayName}`,
+                name: displayName,
                 value: name
             }
         })
-        // console.log('presetChoices=',presetChoices);
         //第一个问答
         const presetPrompt = {
             name: 'preset',
@@ -128,5 +134,34 @@ module.exports = class Creator {
             presetPrompt,
             featurePrompt
         }
+    }
+
+    resolveSavePrompts() {
+        const savePrompts = [
+            {
+                name: 'save',
+                when: isManualMode,
+                type: 'confirm',
+                message: '将其保存为未来项目的预置?',
+                default: false
+            },
+            {
+                name: 'saveName',
+                when: answers => answers.save,
+                type: 'input',
+                message: '保存名称:'
+            }
+        ]
+        return savePrompts
+    }
+
+    async resolvePreset(name) {
+        let preset;
+        // 去取 默认集合 然后判断拿与name 一样的对象
+        const savedPresets = this.getPresets()
+        if (name in savedPresets) {
+            preset = savedPresets[name]
+        }
+        return preset
     }
 }

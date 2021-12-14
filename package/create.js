@@ -39,7 +39,8 @@ module.exports = async (projectName, options) => {
 
     // 判断路径是否存在
     if (fs.existsSync(targetDir)) {
-        console.log('存在 ')
+        console.log('存在 ');
+        return
     }
     // getPackageModules 获取 手动选择配置项 item  返回可执行函数
     const creator = new Creator(name, targetDir, getPackageModules())

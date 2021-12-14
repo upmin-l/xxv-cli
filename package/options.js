@@ -54,7 +54,6 @@ exports.savePreset = (name, preset) => {
 
 exports.defaultPreset = {
     useConfigFiles: false,
-    cssPreprocessor: undefined,
     plugins: {
         '@vue/cli-plugin-babel': {},
         '@vue/cli-plugin-eslint': {

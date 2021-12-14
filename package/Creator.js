@@ -56,7 +56,7 @@ module.exports = class Creator {
             }
             answers.features = answers.features || []
             // run cb registered by prompt modules to finalize the preset
-            this.promptCompleteCbs.forEach(cb => cb(answers, preset))
+            // this.promptCompleteCbs.forEach(cb => cb(answers, preset))
         }
         if (answers.save && answers.saveName) {
             savePreset(answers.saveName, preset)
@@ -87,8 +87,8 @@ module.exports = class Creator {
     }
 
     resolveIntroPrompts() {
+        // 获取默认设置跟 缓存设置
         const presets = this.getPresets();
-        console.log(presets);
         const presetChoices = Object.entries(presets).map(([name, preset]) => {
             let displayName;
             switch (name) {

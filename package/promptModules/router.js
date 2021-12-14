@@ -3,7 +3,7 @@ module.exports = cli => {
   cli.injectFeature({
     name: 'Router',
     value: 'router',
-    description: 'Structure the app with dynamic pages',
+    description: 'vue3 路由控制',
     link: 'https://router.vuejs.org/'
   })
 
@@ -11,8 +11,8 @@ module.exports = cli => {
     name: 'historyMode',
     when: answers => answers.features.includes('router'),
     type: 'confirm',
-    message: `Use history mode for router?`,
-    description: `By using the HTML5 History API, the URLs don't need the '#' character anymore.`,
+    message: `使用 history 路由模式?`,
+    description: `通过使用HTML5 History API, url不再需要'#'字符`,
     link: 'https://router.vuejs.org/guide/essentials/history-mode.html'
   })
   cli.onPromptComplete((answers, options) => {

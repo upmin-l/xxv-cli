@@ -7,10 +7,13 @@
 const {defaults, loadOptions, savePreset} = require("./options");
 const inquirer = require('inquirer')
 const ResolveMultistage = require("./ResolveMultistage");
+const cloneDeep = require('lodash.clonedeep')
+const writeFileTree = require('./util/writeFileTree')
 const isManualMode = answers => answers.preset === '__manual__'
 module.exports = class Creator {
     constructor(name, context, promptModules) {
         this.name = name
+        this.context = context
         this.injectedPrompts = []
         this.savePrompts = this.resolveSavePrompts()
         this.promptCompleteCbs = []
@@ -24,6 +27,7 @@ module.exports = class Creator {
     }
 
     async create(cliOptions = {}, preset = null) {
+        const {name,context} = this
         if (!preset) {
             if (cliOptions.preset) {
 
@@ -33,8 +37,26 @@ module.exports = class Creator {
 
             } else {
                 preset = await this.promptAndResolvePreset();
-                console.log('preset=', preset);
             }
+
+            preset = cloneDeep(preset)
+            // 定义package.js 内容
+            const pkg = {
+                name,
+                version: '0.1.0',
+                private: true,
+                devDependencies: {},
+            }
+            const deps = Object.keys(preset.plugins)
+            deps.forEach(dep => {
+                // TODO  这里获取git上的版本
+                pkg.devDependencies[dep] = 'latest'
+            })
+            console.log('pkg=', pkg);
+            // 创建 package.json
+            await writeFileTree(context, {
+                'package.json': JSON.stringify(pkg, null, 2)
+            })
         }
     }
 
@@ -44,7 +66,6 @@ module.exports = class Creator {
             // await clearConsole(true);
             answers = await inquirer.prompt(this.resolveFinalPrompts())
         }
-        console.log('answers=', answers);
         let preset;
         if (answers.preset && answers.preset !== '__manual__') {
             preset = await this.resolvePreset(answers.preset)
@@ -56,7 +77,7 @@ module.exports = class Creator {
             }
             answers.features = answers.features || []
             // run cb registered by prompt modules to finalize the preset
-            // this.promptCompleteCbs.forEach(cb => cb(answers, preset))
+            this.promptCompleteCbs.forEach(cb => cb(answers, preset))
         }
         if (answers.save && answers.saveName) {
             savePreset(answers.saveName, preset)
@@ -65,7 +86,6 @@ module.exports = class Creator {
     }
 
     resolveFinalPrompts() {
-        console.log('injectedPrompts=', this.injectedPrompts);
         //  这里需要更改的原因是防止选择 默认配置 问答报错
         this.injectedPrompts.forEach(prompt => {
             const originalWhen = prompt.when || (() => true)
@@ -99,7 +119,7 @@ module.exports = class Creator {
                     displayName = 'Default (vite + Vue 3 园区项目)'
                     break;
                 default:
-                    displayName =`${name} ()`
+                    displayName = `${name} ()`
                     break
             }
             return {

@@ -9,6 +9,7 @@ const inquirer = require('inquirer')
 const ResolveMultistage = require("./ResolveMultistage");
 const cloneDeep = require('lodash.clonedeep')
 const writeFileTree = require('./util/writeFileTree')
+const fetch = require('node-fetch')
 const isManualMode = answers => answers.preset === '__manual__'
 module.exports = class Creator {
     constructor(name, context, promptModules) {
@@ -27,7 +28,7 @@ module.exports = class Creator {
     }
 
     async create(cliOptions = {}, preset = null) {
-        const {name,context} = this
+        const {name, context} = this
         if (!preset) {
             if (cliOptions.preset) {
 
@@ -45,17 +46,27 @@ module.exports = class Creator {
                 name,
                 version: '0.1.0',
                 private: true,
-                devDependencies: {},
+                dependencies: {},
+                scripts: {
+                    dev: "vite",
+                    build: "vite build",
+                    preview: "vite preview"
+                },
+                devDependencies: {}
             }
-            const deps = Object.keys(preset.plugins)
-            deps.forEach(dep => {
-                // TODO  这里获取git上的版本
-                pkg.devDependencies[dep] = 'latest'
-            })
-            console.log('pkg=', pkg);
-            // 创建 package.json
-            await writeFileTree(context, {
-                'package.json': JSON.stringify(pkg, null, 2)
+            const data = await  fetch('https://api.github.com/repos/vuejs/vue-next/tags')
+            data.json().then(async (res)=>{
+                pkg.dependencies.vue =res[0].name.replace('v','^');
+                const deps = Object.keys(preset.plugins)
+                deps.forEach(dep => {
+                    // TODO  这里获取git上的版本
+                    pkg.devDependencies[dep] = 'latest'
+                })
+                console.log('pkg=', pkg);
+                // 创建 package.json
+                await writeFileTree(context, {
+                    'package.json': JSON.stringify(pkg, null, 2)
+                })
             })
         }
     }

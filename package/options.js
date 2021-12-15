@@ -55,11 +55,8 @@ exports.savePreset = (name, preset) => {
 exports.defaultPreset = {
     useConfigFiles: false,
     plugins: {
-        '@vue/cli-plugin-babel': {},
-        '@vue/cli-plugin-eslint': {
-            config: 'base',
-            lintOn: ['save']
-        }
+        'vite': {},
+        '@vitejs/plugin-vue': {}
     }
 }
 

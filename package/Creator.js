@@ -9,7 +9,7 @@ const inquirer = require('inquirer')
 const ResolveMultistage = require("./ResolveMultistage");
 const cloneDeep = require('lodash.clonedeep')
 const writeFileTree = require('./util/writeFileTree')
-const Generator = require('./Generator')
+const SetupTemplate = require('./SetupTemplate')
 const fetch = require('node-fetch')
 const PackageManager = require("./util/PackageManager");
 const isManualMode = answers => answers.preset === '__manual__'
@@ -61,11 +61,11 @@ module.exports = class Creator {
                 })
                 console.log('pkg=', pkg);
                 // 创建 package.json
-                await writeFileTree(context, {
-                    'package.json': JSON.stringify(pkg, null, 2)
-                })
+                // await writeFileTree(context, {
+                //     'package.json': JSON.stringify(pkg, null, 2)
+                // })
                 // await pm.install();
-                const generator = new Generator(context, {
+                const generator = new SetupTemplate(context, {
                     pkg
                 })
 

@@ -1,6 +1,7 @@
-
-
-
+/*
+*  负责写入文件模块
+*
+* */
 
 const path = require("path");
 const fs = require('fs-extra')

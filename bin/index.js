@@ -20,6 +20,9 @@ program.command('create <app-name>')
     })
 
 
+
+
+
 program.on('command:*', ([cmd]) => {
     outputHelp()
     logger.warning(`\nUnknown command ${ cmd }.\n`)

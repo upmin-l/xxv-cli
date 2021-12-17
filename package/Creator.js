@@ -9,7 +9,9 @@ const inquirer = require('inquirer')
 const ResolveMultistage = require("./ResolveMultistage");
 const cloneDeep = require('lodash.clonedeep')
 const writeFileTree = require('./util/writeFileTree')
+const Generator = require('./Generator')
 const fetch = require('node-fetch')
+const PackageManager = require("./util/PackageManager");
 const isManualMode = answers => answers.preset === '__manual__'
 module.exports = class Creator {
     constructor(name, context, promptModules) {
@@ -30,17 +32,12 @@ module.exports = class Creator {
     async create(cliOptions = {}, preset = null) {
         const {name, context} = this
         if (!preset) {
-            if (cliOptions.preset) {
+            preset = await this.promptAndResolvePreset();
 
-            } else if (cliOptions.default) {
-
-            } else if (cliOptions.inlinePreset) {
-
-            } else {
-                preset = await this.promptAndResolvePreset();
-            }
-
-            preset = cloneDeep(preset)
+            preset = cloneDeep(preset);
+            // 包管理
+            const packageManager = 'npm';
+            const pm = new PackageManager({context, forcePackageManager: packageManager})
             // 定义package.js 内容
             const pkg = {
                 name,
@@ -54,9 +51,9 @@ module.exports = class Creator {
                 },
                 devDependencies: {}
             }
-            const data = await  fetch('https://api.github.com/repos/vuejs/vue-next/tags')
-            data.json().then(async (res)=>{
-                pkg.dependencies.vue =res[0].name.replace('v','^');
+            const data = await fetch('https://api.github.com/repos/vuejs/vue-next/tags')
+            data.json().then(async (res) => {
+                pkg.dependencies.vue = res[0].name.replace('v', '^');
                 const deps = Object.keys(preset.plugins)
                 deps.forEach(dep => {
                     // TODO  这里获取git上的版本
@@ -66,6 +63,14 @@ module.exports = class Creator {
                 // 创建 package.json
                 await writeFileTree(context, {
                     'package.json': JSON.stringify(pkg, null, 2)
+                })
+                // await pm.install();
+                const generator = new Generator(context, {
+                    pkg
+                })
+
+                await generator.generate({
+                    extractConfigFiles: preset.useConfigFiles
                 })
             })
         }
@@ -97,7 +102,7 @@ module.exports = class Creator {
     }
 
     resolveFinalPrompts() {
-        //  这里需要更改的原因是防止选择 默认配置 问答报错
+
         this.injectedPrompts.forEach(prompt => {
             const originalWhen = prompt.when || (() => true)
             prompt.when = answers => {
@@ -195,4 +200,5 @@ module.exports = class Creator {
         }
         return preset
     }
+
 }

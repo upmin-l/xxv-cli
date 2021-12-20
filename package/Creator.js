@@ -11,6 +11,7 @@ const cloneDeep = require('lodash.clonedeep')
 const writeFileTree = require('./util/writeFileTree')
 const SetupTemplate = require('./SetupTemplate')
 const fetch = require('node-fetch')
+const sortObject = require('./util/sortObject')
 const PackageManager = require("./util/PackageManager");
 const isManualMode = answers => answers.preset === '__manual__'
 module.exports = class Creator {
@@ -51,6 +52,7 @@ module.exports = class Creator {
                 },
                 devDependencies: {}
             }
+
             const data = await fetch('https://api.github.com/repos/vuejs/vue-next/tags')
             data.json().then(async (res) => {
                 pkg.dependencies.vue = res[0].name.replace('v', '^');
@@ -59,14 +61,19 @@ module.exports = class Creator {
                     // TODO  这里获取git上的版本
                     pkg.devDependencies[dep] = 'latest'
                 })
-                console.log('pkg=', pkg);
+                // console.log('preset=', preset);
+                // console.log('pkg=', pkg);
                 // 创建 package.json
                 // await writeFileTree(context, {
                 //     'package.json': JSON.stringify(pkg, null, 2)
                 // })
+                // //依赖下载
                 // await pm.install();
+
+                const plugins = await this.resolvePlugins(preset.plugins, pkg)
                 const generator = new SetupTemplate(context, {
-                    pkg
+                    pkg,
+                    plugins,
                 })
 
                 await generator.generate({
@@ -200,5 +207,16 @@ module.exports = class Creator {
         }
         return preset
     }
-
+    // 处理插件依赖
+    async resolvePlugins(rawPlugins, pkg) {
+        rawPlugins = sortObject(rawPlugins, [], true)
+        const plugins = []
+        for (const id of Object.keys(rawPlugins)) {
+            const apply = (() => {
+            })
+            let options = rawPlugins[id] || {}
+            plugins.push({id, apply, options})
+        }
+        return plugins
+    }
 }

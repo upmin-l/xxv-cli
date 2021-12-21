@@ -1,5 +1,6 @@
 const PackageManager = require("./util/PackageManager");
 const writeFileTree = require('./util/writeFileTree')
+const GeneratorAPI = require('./GeneratorAPI')
 const ejs = require('ejs')
 const watchFiles = (files, set) => {
     return new Proxy(files, {
@@ -26,7 +27,7 @@ module.exports = class SetupTemplate {
         this.plugins = plugins
         this.fileMiddlewares = []
         this.configTransforms = {}
-        console.log(plugins);
+        console.log('plugins',plugins);
         this.files = Object.keys(files).length
             ? watchFiles(files, this.filesModifyRecord = new Set())
             : files

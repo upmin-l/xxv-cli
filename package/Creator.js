@@ -13,6 +13,8 @@ const SetupTemplate = require('./SetupTemplate')
 const fetch = require('node-fetch')
 const sortObject = require('./util/sortObject')
 const PackageManager = require("./util/PackageManager");
+const path = require("path");
+const fs = require('fs-extra')
 const isManualMode = answers => answers.preset === '__manual__'
 module.exports = class Creator {
     constructor(name, context, promptModules) {
@@ -36,6 +38,9 @@ module.exports = class Creator {
             preset = await this.promptAndResolvePreset();
 
             preset = cloneDeep(preset);
+            preset.plugins['cli'] = Object.assign({
+                projectName: name
+            }, preset)
             // 包管理
             const packageManager = 'npm';
             const pm = new PackageManager({context, forcePackageManager: packageManager})
@@ -99,7 +104,7 @@ module.exports = class Creator {
                 plugins: {}
             }
             answers.features = answers.features || []
-            // run cb registered by prompt modules to finalize the preset
+            // 运行cb回调注册提示模块，完成预设
             this.promptCompleteCbs.forEach(cb => cb(answers, preset))
         }
         if (answers.save && answers.saveName) {
@@ -207,11 +212,18 @@ module.exports = class Creator {
         }
         return preset
     }
+
     // 处理插件依赖
     async resolvePlugins(rawPlugins, pkg) {
-        rawPlugins = sortObject(rawPlugins, [], true)
-        const plugins = []
+        rawPlugins = sortObject(rawPlugins, ['cli'], true)
+        const plugins = [];
         for (const id of Object.keys(rawPlugins)) {
+            // const a = path.resolve(__dirname, `plugMode/${id}.js`)
+            // console.log(a);
+            // const rPath = await fs.ensureFileSync(a)
+            // console.log(rPath);
+            // const apply = require(rPath) || (() => {
+            // })
             const apply = (() => {
             })
             let options = rawPlugins[id] || {}

@@ -76,12 +76,12 @@ module.exports = class Creator {
                 // await pm.install();
 
                 const plugins = await this.resolvePlugins(preset.plugins, pkg)
-                const generator = new SetupTemplate(context, {
+                const setupTemplate = new SetupTemplate(context, {
                     pkg,
                     plugins,
                 })
 
-                await generator.generate({
+                await setupTemplate.generate({
                     extractConfigFiles: preset.useConfigFiles
                 })
             })
@@ -216,17 +216,15 @@ module.exports = class Creator {
     // 处理插件依赖
     async resolvePlugins(rawPlugins, pkg) {
         rawPlugins = sortObject(rawPlugins, ['cli'], true)
+        console.log('rawPlugins',rawPlugins);
         const plugins = [];
         for (const id of Object.keys(rawPlugins)) {
-            // const a = path.resolve(__dirname, `plugMode/${id}.js`)
-            // console.log(a);
-            // const rPath = await fs.ensureFileSync(a)
-            // console.log(rPath);
-            // const apply = require(rPath) || (() => {
-            // })
-            const apply = (() => {
+            const pluginPath = path.resolve(__dirname, `plugMode/${id}.js`)
+            // 获取插件依赖入口
+            const apply = require(pluginPath) || (() => {
             })
             let options = rawPlugins[id] || {}
+            //处理 '名字 入口方法 配置项'
             plugins.push({id, apply, options})
         }
         return plugins

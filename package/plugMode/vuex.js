@@ -1,4 +1,3 @@
-
 module.exports = ()=>{
-    console.log('cli');
+    console.log('vuex');
 }

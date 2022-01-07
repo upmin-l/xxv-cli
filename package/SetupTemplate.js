@@ -27,10 +27,10 @@ module.exports = class SetupTemplate {
         this.plugins = plugins
         this.fileMiddlewares = []
         this.configTransforms = {}
-        console.log('plugins',plugins);
         this.files = Object.keys(files).length
             ? watchFiles(files, this.filesModifyRecord = new Set())
             : files
+        this.rootOption = plugins.find(p => p.id === 'cli')
         /*
         * [
               { id: 'vue', apply: [Function: apply] },
@@ -46,7 +46,10 @@ module.exports = class SetupTemplate {
 
     async generate({configFiles = false, checkExisting = false}) {
         const initialFiles = Object.assign({}, this.files)
-
+        // 取出依赖id
+        const pluginIds = this.plugins.map(p => p.id)
+        console.log('pluginIds',pluginIds);
+        console.log('allPlugins',this.allPlugins);
         this.extractConfigFiles(configFiles, checkExisting)
 
         await this.resolveFiles()
@@ -56,11 +59,13 @@ module.exports = class SetupTemplate {
         // console.log(this.context, this.files, initialFiles, this.filesModifyRecord);
         // await writeFileTree(this.context, this.files, initialFiles, this.filesModifyRecord)
     }
-    extractConfigFiles (extractAll, checkExisting) {
+
+    extractConfigFiles(extractAll, checkExisting) {
         const configTransforms = Object.assign({},
             this.configTransforms,
         )
     }
+
     async resolveFiles() {
         const files = this.files
         for (const middleware of this.fileMiddlewares) {
@@ -74,9 +79,9 @@ module.exports = class SetupTemplate {
         Object.keys(this.pkg.dependencies || {})
             .concat(Object.keys(this.pkg.devDependencies || {}))
             .forEach(id => {
+                // const pluginsIds =
                 allPlugins.push({
-                    id, apply: (() => {
-                    })
+                    id, apply: (() => {})
                 })
             })
         return allPlugins

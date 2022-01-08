@@ -58,33 +58,52 @@ module.exports = class Creator {
                 devDependencies: {}
             }
 
-            const data = await fetch('https://api.github.com/repos/vuejs/vue-next/tags')
-            data.json().then(async (res) => {
-                pkg.dependencies.vue = res[0].name.replace('v', '^');
-                const deps = Object.keys(preset.plugins)
-                deps.forEach(dep => {
-                    // TODO  这里获取git上的版本
-                    pkg.devDependencies[dep] = 'latest'
-                })
-                // console.log('preset=', preset);
-                // console.log('pkg=', pkg);
-                // 创建 package.json
-                // await writeFileTree(context, {
-                //     'package.json': JSON.stringify(pkg, null, 2)
-                // })
-                // //依赖下载
-                // await pm.install();
-
-                const plugins = await this.resolvePlugins(preset.plugins, pkg)
-                const setupTemplate = new SetupTemplate(context, {
-                    pkg,
-                    plugins,
-                })
-
-                await setupTemplate.generate({
-                    extractConfigFiles: preset.useConfigFiles
-                })
+            pkg.dependencies.vue = 'latest';
+            const deps = Object.keys(preset.plugins)
+            deps.forEach(dep => {
+                // TODO  这里获取git上的版本
+                pkg.devDependencies[dep] = 'latest'
             })
+
+            const plugins = await this.resolvePlugins(preset.plugins, pkg)
+            const setupTemplate = new SetupTemplate(context, {
+                pkg,
+                plugins,
+            })
+
+            await setupTemplate.generate({
+                extractConfigFiles: preset.useConfigFiles
+            })
+
+
+
+            // todo 安全考虑开发环境不能一直使用请求GitHub
+            // const data = await fetch('https://api.github.com/repos/vuejs/vue-next/tags')
+            // data.json().then(async (res) => {
+            //     console.log(res);
+            //     pkg.dependencies.vue = res[0].name.replace('v', '^');
+            //     const deps = Object.keys(preset.plugins)
+            //     deps.forEach(dep => {
+            //         // TODO  这里获取git上的版本
+            //         pkg.devDependencies[dep] = 'latest'
+            //     })
+            //     // 创建 package.json
+            //     await writeFileTree(context, {
+            //         'package.json': JSON.stringify(pkg, null, 2)
+            //     })
+            //     //依赖下载
+            //     await pm.install();
+            //
+            //     const plugins = await this.resolvePlugins(preset.plugins, pkg)
+            //     const setupTemplate = new SetupTemplate(context, {
+            //         pkg,
+            //         plugins,
+            //     })
+            //
+            //     await setupTemplate.generate({
+            //         extractConfigFiles: preset.useConfigFiles
+            //     })
+            // })
         }
     }
 
@@ -216,16 +235,17 @@ module.exports = class Creator {
     // 处理插件依赖
     async resolvePlugins(rawPlugins, pkg) {
         rawPlugins = sortObject(rawPlugins, ['cli'], true)
-        console.log('rawPlugins',rawPlugins);
         const plugins = [];
         for (const id of Object.keys(rawPlugins)) {
-            const pluginPath = path.resolve(__dirname, `plugMode/${id}.js`)
-            // 获取插件依赖入口
-            const apply = require(pluginPath) || (() => {
-            })
-            let options = rawPlugins[id] || {}
-            //处理 '名字 入口方法 配置项'
-            plugins.push({id, apply, options})
+            if (!['vite','@vitejs/plugin-vue'].includes(id)){
+                const pluginPath = path.resolve(__dirname, `plugMode/${id}.js`)
+                // 获取插件依赖入口
+                const apply = require(pluginPath) || (() => {
+                })
+                let options = rawPlugins[id] || {}
+                //处理 '名字 入口方法 配置项'
+                plugins.push({id, apply, options})
+            }
         }
         return plugins
     }

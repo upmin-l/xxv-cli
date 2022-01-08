@@ -4,7 +4,7 @@ const {outputHelp, Command} = require('commander')
 const logger = require('../utils/logger')
 const minimist = require('minimist')
 const program = new Command()
-program.version(`${ require('../package.json').version }`).usage('<command> [options]')
+program.version(`${require('../package.json').version}`).usage('<command> [options]')
 
 program.command('create <app-name>')
     .description('创建一个新的项目')
@@ -20,12 +20,33 @@ program.command('create <app-name>')
     })
 
 
+program.command('preview')
+    .description('生产环境预览(本地启动nginx预览)')
+    .action(() => {
 
+    })
 
+program.command('build')
+    .description('一键打包部署')
+    .action(() => {
+
+    })
+
+program.command('api-test')
+    .description('api 接口调试')
+    .action(() => {
+
+    })
+
+program.command('test')
+    .description('自动化配置测试')
+    .action(() => {
+
+    })
 
 program.on('command:*', ([cmd]) => {
     outputHelp()
-    logger.warning(`\nUnknown command ${ cmd }.\n`)
+    logger.warning(`\nUnknown command ${cmd}.\n`)
     process.exitCode = 1
 })
 

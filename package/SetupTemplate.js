@@ -31,6 +31,7 @@ module.exports = class SetupTemplate {
             ? watchFiles(files, this.filesModifyRecord = new Set())
             : files
         this.rootOption = plugins.find(p => p.id === 'cli')
+        console.log('rootOption',this.rootOption);
         /*
         * [
               { id: 'vue', apply: [Function: apply] },
@@ -39,17 +40,16 @@ module.exports = class SetupTemplate {
               { id: 'vuex', apply: [Function: apply] },
               { id: 'vue-router', apply: [Function: apply] }
             ]
-
         * */
         this.allPlugins = this.resolveAllPlugins()
+        console.log('allPlugins',this.allPlugins);
     }
 
     async generate({configFiles = false, checkExisting = false}) {
         const initialFiles = Object.assign({}, this.files)
         // 取出依赖id
         const pluginIds = this.plugins.map(p => p.id)
-        console.log('pluginIds',pluginIds);
-        console.log('allPlugins',this.allPlugins);
+
         this.extractConfigFiles(configFiles, checkExisting)
 
         await this.resolveFiles()
@@ -79,9 +79,9 @@ module.exports = class SetupTemplate {
         Object.keys(this.pkg.dependencies || {})
             .concat(Object.keys(this.pkg.devDependencies || {}))
             .forEach(id => {
-                // const pluginsIds =
                 allPlugins.push({
-                    id, apply: (() => {})
+                    id, apply: (() => {
+                    })
                 })
             })
         return allPlugins

@@ -23,6 +23,8 @@ module.exports = class Creator {
         this.injectedPrompts = []
         this.savePrompts = this.resolveSavePrompts()
         this.promptCompleteCbs = []
+        this.afterInvokeCbs =[]
+        this.afterAnyInvokeCbs =[]
         // 建立问答
         const {presetPrompt, featurePrompt} = this.resolveIntroPrompts()
         this.presetPrompt = presetPrompt
@@ -33,7 +35,7 @@ module.exports = class Creator {
     }
 
     async create(cliOptions = {}, preset = null) {
-        const {name, context} = this
+        const {name, context, afterInvokeCbs, afterAnyInvokeCbs} = this
         if (!preset) {
             preset = await this.promptAndResolvePreset();
             preset = cloneDeep(preset);
@@ -41,7 +43,7 @@ module.exports = class Creator {
                 projectName: name
             }, preset)
             // console.log('preset',preset);
-            if (preset.plugins['vue-router']){
+            if (preset.plugins['vue-router']) {
                 if (preset.historyMode) {
                     preset.plugins['vue-router'].historyMode = true
                 }
@@ -76,12 +78,13 @@ module.exports = class Creator {
             const setupTemplate = new SetupTemplate(context, {
                 pkg,
                 plugins,
+                afterInvokeCbs,
+                afterAnyInvokeCbs
             })
 
             await setupTemplate.generate({
                 extractConfigFiles: preset.useConfigFiles
             })
-
 
 
             // todo 安全考虑开发环境不能一直使用请求GitHub
@@ -244,7 +247,7 @@ module.exports = class Creator {
         rawPlugins = sortObject(rawPlugins, ['cli'], true)
         const plugins = [];
         for (const id of Object.keys(rawPlugins)) {
-            if (!['vite','@vitejs/plugin-vue'].includes(id)){
+            if (!['vite', '@vitejs/plugin-vue'].includes(id)) {
                 const pluginPath = path.resolve(__dirname, `plugMode/${id}.js`)
                 // 获取插件依赖入口
                 const apply = require(pluginPath) || (() => {

@@ -34,6 +34,7 @@ class GeneratorAPI {
 
     render(source, additionalData = {}, ejsOptions = {}) {
         const baseDir = this.getCallDir()
+        console.log(typeof baseDir);
         if (typeof baseDir === 'string') {
             source = path.resolve(baseDir, source)
             // 注入 apply

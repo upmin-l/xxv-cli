@@ -17,13 +17,16 @@
     "commander": "^6.2.0",
     "execa": "^1.0.0",
     "fs-extra": "^10.0.0",
+    "globby": "^11.0.2",
     "inquirer": "^8.2.0",
+    "isbinaryfile": "^4.0.8",
     "lodash.clonedeep": "^4.5.0",
     "minimist": "^1.2.5",
     "node-fetch": "^2.6.6",
     "ora": "^6.0.1",
     "semver": "^7.3.4",
-    "strip-ansi": "^6.0.0"
+    "strip-ansi": "^6.0.0",
+    "yaml-front-matter": "^4.1.1"
   },
   "devDependencies": {
     "ejs": "^3.1.6"

@@ -1,6 +1,5 @@
 exports.getPackageModules = () => {
     return [
-        'thingjs',
         'uearth',
         'spray',
         'vuex',

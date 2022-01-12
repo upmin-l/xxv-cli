@@ -1,5 +1,5 @@
 const fs = require("fs-extra");
-const { getRcPath } = require('./util/rcPath')
+const {getRcPath} = require('./util/rcPath')
 const logger = require('../utils/logger')
 const cloneDeep = require('lodash.clonedeep')
 let cachedOptions;
@@ -11,11 +11,11 @@ exports.loadOptions = () => {
     // 读取缓存配置文件
     if (fs.existsSync(rcPath)) {
         try {
-            cachedOptions  = JSON.parse(fs.readFileSync(rcPath,'utf-8'))
-        }catch (e){
-            logger.error(`加载缓存保存配置错误:`+
+            cachedOptions = JSON.parse(fs.readFileSync(rcPath, 'utf-8'))
+        } catch (e) {
+            logger.error(`加载缓存保存配置错误:` +
                 `~/.xxvrc 可能损坏或有格式错误. ` +
-                `请删除/修复它，或者重新运行xxv-cli 重新保存`+
+                `请删除/修复它，或者重新运行xxv-cli 重新保存` +
                 `(${e.message})`
             )
             process.exit(1)
@@ -49,7 +49,7 @@ exports.saveOptions = toSave => {
 exports.savePreset = (name, preset) => {
     const presets = cloneDeep(exports.loadOptions().presets || {})
     presets[name] = preset
-    return exports.saveOptions({ presets })
+    return exports.saveOptions({presets})
 }
 
 exports.defaultPreset = {
@@ -62,8 +62,8 @@ exports.defaultPreset = {
 
 exports.defaults = {
     presets: {
-        'default': Object.assign({vueVersion: '3'}, exports.defaultPreset),
-        'u_earth': Object.assign({vueVersion: '3'}, exports.defaultPreset),
+        'default': Object.assign({hasDefault: true, vueVersion: '3', useThing: true}, exports.defaultPreset),
+        'u_earth': Object.assign({hasDefault: true, vueVersion: '3', useEarth: true}, exports.defaultPreset),
     }
 }
 

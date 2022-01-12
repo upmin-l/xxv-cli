@@ -36,14 +36,21 @@ module.exports = class Creator {
         const {name, context} = this
         if (!preset) {
             preset = await this.promptAndResolvePreset();
-
             preset = cloneDeep(preset);
             preset.plugins['cli'] = Object.assign({
                 projectName: name
             }, preset)
+            // console.log('preset',preset);
+            if (preset.plugins['vue-router']){
+                if (preset.historyMode) {
+                    preset.plugins['vue-router'].historyMode = true
+                }
+            }
+
             // 包管理
             const packageManager = 'npm';
             const pm = new PackageManager({context, forcePackageManager: packageManager})
+
             // 定义package.js 内容
             const pkg = {
                 name,
@@ -64,7 +71,7 @@ module.exports = class Creator {
                 // TODO  这里获取git上的版本
                 pkg.devDependencies[dep] = 'latest'
             })
-
+            //  获得插件依赖入口
             const plugins = await this.resolvePlugins(preset.plugins, pkg)
             const setupTemplate = new SetupTemplate(context, {
                 pkg,

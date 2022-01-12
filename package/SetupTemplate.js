@@ -2,6 +2,7 @@ const PackageManager = require("./util/PackageManager");
 const writeFileTree = require('./util/writeFileTree')
 const GeneratorAPI = require('./GeneratorAPI')
 const ejs = require('ejs')
+const path = require("path");
 const watchFiles = (files, set) => {
     return new Proxy(files, {
         set(target, key, value, receiver) {
@@ -18,7 +19,8 @@ module.exports = class SetupTemplate {
     constructor(context, {
         pkg = {},
         plugins = [],
-        files = []
+        files = [],
+        invoking = false
     }) {
         this.context = context;
         this.pkg = Object.assign({}, pkg)
@@ -27,11 +29,13 @@ module.exports = class SetupTemplate {
         this.plugins = plugins
         this.fileMiddlewares = []
         this.configTransforms = {}
+        this.invoking = invoking
         this.files = Object.keys(files).length
             ? watchFiles(files, this.filesModifyRecord = new Set())
             : files
+        // 把不是插件配置的cli 取出来
         this.rootOption = plugins.find(p => p.id === 'cli')
-        console.log('rootOption',this.rootOption);
+        // console.log('rootOption', this.rootOption);
         /*
         * [
               { id: 'vue', apply: [Function: apply] },
@@ -42,10 +46,29 @@ module.exports = class SetupTemplate {
             ]
         * */
         this.allPlugins = this.resolveAllPlugins()
-        console.log('allPlugins',this.allPlugins);
+        // console.log('allPlugins', this.allPlugins);
+    }
+
+    async initPlugins() {
+        const {rootOptions, invoking} = this
+        // console.log('plugins', this.plugins);
+        // for (const key of this.allPlugins) {
+        //     const {id, apply} = key
+        //     const api = new GeneratorAPI(id, this, {}, rootOptions)
+        //     await apply(api, {}, rootOptions, invoking)
+        // }
+
+        for (const plugin of this.plugins) {
+            const {id, apply, options} = plugin
+            const api = new GeneratorAPI(id, this, options, rootOptions)
+            await apply(api, options, rootOptions, invoking)
+        }
     }
 
     async generate({configFiles = false, checkExisting = false}) {
+        // 执行各个插件内部逻辑
+        await this.initPlugins()
+
         const initialFiles = Object.assign({}, this.files)
         // 取出依赖id
         const pluginIds = this.plugins.map(p => p.id)
@@ -68,6 +91,7 @@ module.exports = class SetupTemplate {
 
     async resolveFiles() {
         const files = this.files
+        console.log('files=', this.files);
         for (const middleware of this.fileMiddlewares) {
             await middleware(files, ejs.render)
         }
@@ -79,10 +103,12 @@ module.exports = class SetupTemplate {
         Object.keys(this.pkg.dependencies || {})
             .concat(Object.keys(this.pkg.devDependencies || {}))
             .forEach(id => {
-                allPlugins.push({
-                    id, apply: (() => {
+                if (!['vite', '@vitejs/plugin-vue', 'vue'].includes(id)) {
+                    const pluginPath = path.resolve(__dirname, `plugMode/${id}.js`)
+                    const apply = require(pluginPath) || (() => {
                     })
-                })
+                    allPlugins.push({id, apply, options: {}})
+                }
             })
         return allPlugins
     }

@@ -23,8 +23,6 @@ module.exports = class Creator {
         this.injectedPrompts = []
         this.savePrompts = this.resolveSavePrompts()
         this.promptCompleteCbs = []
-        this.afterInvokeCbs =[]
-        this.afterAnyInvokeCbs =[]
         // 建立问答
         const {presetPrompt, featurePrompt} = this.resolveIntroPrompts()
         this.presetPrompt = presetPrompt
@@ -35,7 +33,7 @@ module.exports = class Creator {
     }
 
     async create(cliOptions = {}, preset = null) {
-        const {name, context, afterInvokeCbs, afterAnyInvokeCbs} = this
+        const {name, context} = this
         if (!preset) {
             preset = await this.promptAndResolvePreset();
             preset = cloneDeep(preset);
@@ -71,15 +69,22 @@ module.exports = class Creator {
             const deps = Object.keys(preset.plugins)
             deps.forEach(dep => {
                 // TODO  这里获取git上的版本
-                pkg.devDependencies[dep] = 'latest'
+                if(dep!=='cli')pkg.devDependencies[dep] = 'latest'
+
             })
-            //  获得插件依赖入口
+
+            // 创建 package.json
+            await writeFileTree(context, {
+                'package.json': JSON.stringify(pkg, null, 2)
+            })
+            //依赖下载
+            // await pm.install();
+
+            // //  获得插件依赖入口
             const plugins = await this.resolvePlugins(preset.plugins, pkg)
             const setupTemplate = new SetupTemplate(context, {
                 pkg,
                 plugins,
-                afterInvokeCbs,
-                afterAnyInvokeCbs
             })
 
             await setupTemplate.generate({

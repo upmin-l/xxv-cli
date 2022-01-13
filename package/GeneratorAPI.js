@@ -4,7 +4,15 @@ const globby = require('globby')
 const {isBinaryFileSync} = require("isbinaryfile")
 const yaml = require('yaml-front-matter')
 const ejs = require('ejs')
+
 class GeneratorAPI {
+    /**
+     *
+     * @param id 依赖id
+     * @param generator 调用生成器实例
+     * @param options 生成器 选项
+     * @param rootOptions 根选项(整个预设)
+     */
     constructor(id, generator, options, rootOptions) {
         this.id = id;
         this.generator = generator
@@ -34,11 +42,10 @@ class GeneratorAPI {
 
     render(source, additionalData = {}, ejsOptions = {}) {
         const baseDir = this.getCallDir()
-        console.log(typeof baseDir);
-        if (typeof baseDir === 'string') {
+        if (typeof source === 'string') {
             source = path.resolve(baseDir, source)
             // 注入 apply
-            this.injectFileMiddleware(async () => {
+            this.injectFileMiddleware(async (file) => {
                 const data = this.resolveData(additionalData)
                 const files = await globby(['**/*'], {cwd: source, dot: true})
                 for (const rcPath of files) {
@@ -55,10 +62,22 @@ class GeneratorAPI {
                     const content = this.renderFile(sourcePath, data, ejsOptions)
                     // 只有文件不是空文件才添加
                     if (Buffer.isBuffer(content) || /[^\s]/.test(content)) {
-                        files[targetPath] = content
+                        file[targetPath] = content
                     }
                 }
             })
+        } else if (typeof source === 'object') {
+            this.injectFileMiddleware((file) => {
+                const data = this.resolveData(additionalData)
+                for (const targetPath of data) {
+                    const sourcePath = path.resolve(baseDir, source[targetPath])
+                    const content = this.renderFile(sourcePath, data, ejsOptions)
+                    if (Buffer.isBuffer(content) || content.trim()) {
+                        file[targetPath] = content
+                    }
+                }
+            })
+
         }
     }
 

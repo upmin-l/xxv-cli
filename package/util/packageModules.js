@@ -3,6 +3,7 @@ exports.getPackageModules = () => {
         'uearth',
         'spray',
         'vuex',
+        'pinia',
         'router',
-    ].map(file => require(`../promptModules/${file}`))
+    ].map(file => require(`./package/plugModules/${file}`))
 }

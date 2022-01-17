@@ -39,7 +39,15 @@ class GeneratorAPI {
         return path.resolve(this.generator.context, ..._paths)
     }
 
-
+    /**
+     *
+     * @param source {string | object | FileMiddleware} source -
+     *  1,目录的绝对路径-
+     *  2，template 映射源
+     *  3，一个中间件函数
+     * @param additionalData
+     * @param ejsOptions
+     */
     render(source, additionalData = {}, ejsOptions = {}) {
         const baseDir = this.getCallDir()
         if (typeof source === 'string') {
@@ -78,6 +86,8 @@ class GeneratorAPI {
                 }
             })
 
+        } else if (typeof source === 'function') {
+            this.injectFileMiddleware(source)
         }
     }
 

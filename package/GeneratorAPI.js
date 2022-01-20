@@ -136,6 +136,7 @@ class GeneratorAPI {
     }
 
     renderFile(name, data, ejsOptions) {
+        console.log('ejsOptions',ejsOptions);
         if (isBinaryFileSync(name)) return fs.readFileSync(name) // return buffer
         const template = fs.readFileSync(name, 'utf-8')
         const parsed = yaml.loadFront(template)

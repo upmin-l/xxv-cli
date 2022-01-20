@@ -79,7 +79,6 @@ module.exports = class SetupTemplate {
 
         this.files['package.json'] = JSON.stringify(this.pkg, null, 2) + '\n'
         await writeFileTree(this.context, this.files, initialFiles, this.filesModifyRecord)
-        // await writeFileTree(this.context, this.files, initialFiles, this.filesModifyRecord)
     }
 
 
@@ -88,7 +87,6 @@ module.exports = class SetupTemplate {
         for (const middleware of this.fileMiddlewares) {
             await middleware(files, ejs.render)
         }
-
         normalizeFilePaths(files)
     }
 

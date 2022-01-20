@@ -1,0 +1,5 @@
+{
+  "htmlhint.options": {
+    "spec-char-escape": false
+  }
+}

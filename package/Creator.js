@@ -46,7 +46,6 @@ module.exports = class Creator {
                     preset.plugins['vue-router'].historyMode = true
                 }
             }
-
             // 包管理
             const packageManager = 'npm';
             const pm = new PackageManager({context, forcePackageManager: packageManager})
@@ -65,7 +64,7 @@ module.exports = class Creator {
                 devDependencies: {}
             }
 
-            pkg.dependencies.vue = 'latest';
+            pkg.dependencies.vue = '^3.2.16';
             const deps = Object.keys(preset.plugins)
             deps.forEach(dep => {
                 // TODO  这里获取git上的版本
@@ -74,9 +73,9 @@ module.exports = class Creator {
             })
 
             // 创建 package.json
-            await writeFileTree(context, {
-                'package.json': JSON.stringify(pkg, null, 2)
-            })
+            // await writeFileTree(context, {
+            //     'package.json': JSON.stringify(pkg, null, 2)
+            // })
             //依赖下载
             // await pm.install();
 
@@ -135,6 +134,7 @@ module.exports = class Creator {
             // 手动选择
             preset = {
                 useConfigFiles: answers.useConfigFiles === 'files',
+                hasDefault:false,
                 plugins: {}
             }
             answers.features = answers.features || []

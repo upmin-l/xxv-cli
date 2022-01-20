@@ -29,6 +29,7 @@ module.exports = class SetupTemplate {
         this.plugins = plugins
         this.fileMiddlewares = []
         this.configTransforms = {}
+        this.imports = {}
         this.invoking = invoking
         this.files = Object.keys(files).length
             ? watchFiles(files, this.filesModifyRecord = new Set())
@@ -88,6 +89,11 @@ module.exports = class SetupTemplate {
             await middleware(files, ejs.render)
         }
         normalizeFilePaths(files)
+
+        Object.keys(files).forEach(file => {
+            let imports = this.imports[file]
+            imports = imports instanceof Set ? Array.from(imports) : imports
+        })
     }
 
     // 获得所有插件

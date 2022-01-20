@@ -17,7 +17,7 @@ export default ({ mode }) => {
             },
         },
         optimizeDeps: {
-            include: ['vue', 'vuex', 'vue-router'],
+            include:<%- JSON.stringify(includes) %>,
         },
         build: {
             terserOptions: {

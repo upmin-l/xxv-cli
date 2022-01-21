@@ -90,6 +90,7 @@ module.exports = class SetupTemplate {
         }
         normalizeFilePaths(files)
 
+        // 处理 语句 注入
         Object.keys(files).forEach(file => {
             let imports = this.imports[file]
             imports = imports instanceof Set ? Array.from(imports) : imports

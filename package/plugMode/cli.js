@@ -1,18 +1,22 @@
+const fs = require('fs-extra')
+const path =require('path')
 module.exports = (api, options) => {
-
+    options.includes = ['vue']
     // 如果默认创建的
     if (options.hasDefault) {
 
     } else {
         // 手动选项创建
         const {plugins} = options
-        options.includes = ['vue']
+
         for (const plugin in plugins) {
-            console.log('plugins[plugin].include',plugins[plugin].include);
             if (plugins[plugin].include) {
                 options.includes.push(plugin)
             }
         }
+        const destPath = path.resolve(process.cwd(), options.projectName || '.','./public');
+        const rcPath =path.resolve(__dirname,'./vendor')
+        fs.copySync(rcPath,destPath)
     }
 
     process.on('unhandledRejection', (reason, p) => {

@@ -113,16 +113,15 @@ class GeneratorAPI {
         Error.captureStackTrace(obj)
         const callSite = obj.stack.split('\n')[3]
 
-        // the regexp for the stack when called inside a named function
+        // 在指定函数内调用时堆栈的正则
         const namedStackRegExp = /\s\((.*):\d+:\d+\)$/
-        // the regexp for the stack when called inside an anonymous
+        // 在匿名对象内部调用时堆栈的正则
         const anonymousStackRegExp = /at (.*):\d+:\d+$/
 
         let matchResult = callSite.match(namedStackRegExp)
         if (!matchResult) {
             matchResult = callSite.match(anonymousStackRegExp)
         }
-
         const fileName = matchResult[1]
         return path.dirname(fileName)
     }

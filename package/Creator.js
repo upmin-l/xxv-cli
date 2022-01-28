@@ -257,8 +257,8 @@ module.exports = class Creator {
                 // 获取插件依赖入口
                 const apply = require(pluginPath) || (() => {
                 })
-                let options = rawPlugins[id] || {}
                 //处理 '名字 入口方法 配置项'
+                let options = rawPlugins[id] || {}
                 plugins.push({id, apply, options})
             }
         }

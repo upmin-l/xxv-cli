@@ -8,16 +8,18 @@ module.exports = (api, options) => {
     } else {
         // 手动选项创建
         const {plugins} = options
-
+        // vite.config.js 的 include
         for (const plugin in plugins) {
             if (plugins[plugin].include) {
                 options.includes.push(plugin)
             }
         }
-        const destPath = path.resolve(process.cwd(), options.projectName || '.','./public');
-        const rcPath =path.resolve(__dirname,'./vendor')
-        fs.copySync(rcPath,destPath)
+
     }
+
+    const destPath = path.resolve(process.cwd(), options.projectName || '.','./public');
+    const rcPath =path.resolve(__dirname,'./vendor')
+    fs.copySync(rcPath,destPath)
 
     process.on('unhandledRejection', (reason, p) => {
         console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);

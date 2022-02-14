@@ -32,6 +32,7 @@ class GeneratorAPI {
     // 入口源
     get entryFile() {
         if (this._entryFile) return this._entryFile
+        // 如果是ts 项目需要指定 不同格式文件
         return (this._entryFile = fs.existsSync(this.resolve('src/main.ts')) ? 'src/main.ts' : 'src/main.js')
     }
 

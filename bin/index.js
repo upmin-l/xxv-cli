@@ -29,19 +29,19 @@ program.command('preview')
 program.command('build')
     .description('一键打包部署')
     .action(() => {
-
+         // TODO  项目地址打包 更新到目标地址
     })
 
-program.command('api-test')
-    .description('api 接口调试')
+program.command('tool')
+    .description('xxv工具')
     .action(() => {
-
+        // TODO 各数据转换 gojson 地铁站点各市生成 webGis 功能 普通功能方法生成
     })
 
 program.command('test')
     .description('自动化配置测试')
     .action(() => {
-
+        // TODO vue 组件测试
     })
 
 program.on('command:*', ([cmd]) => {

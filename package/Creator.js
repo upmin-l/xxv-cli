@@ -65,6 +65,7 @@ module.exports = class Creator {
             }
 
             pkg.dependencies.vue = '^3.2.16';
+            console.log(preset.plugins);
             const deps = Object.keys(preset.plugins)
             deps.forEach(dep => {
                 // TODO  这里获取git上的版本
@@ -73,9 +74,9 @@ module.exports = class Creator {
             })
 
             // 创建 package.json
-            // await writeFileTree(context, {
-            //     'package.json': JSON.stringify(pkg, null, 2)
-            // })
+            await writeFileTree(context, {
+                'package.json': JSON.stringify(pkg, null, 2)
+            })
             //依赖下载
             // await pm.install();
 
@@ -252,7 +253,7 @@ module.exports = class Creator {
         rawPlugins = sortObject(rawPlugins, ['cli'], true)
         const plugins = [];
         for (const id of Object.keys(rawPlugins)) {
-            if (!['vite', '@vitejs/plugin-vue'].includes(id)) {
+            if (!['@vitejs/plugin-vue'].includes(id)) {
                 const pluginPath = path.resolve(__dirname, `plugMode/${id}.js`)
                 // 获取插件依赖入口
                 const apply = require(pluginPath) || (() => {

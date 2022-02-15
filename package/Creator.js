@@ -15,6 +15,9 @@ const sortObject = require('./util/sortObject')
 const PackageManager = require("./util/PackageManager");
 const path = require("path");
 const fs = require('fs-extra')
+const {warning, info,success} = require('../utils/logger')
+const generateReadme = require('./util/generateReadme')
+const chalk = require('chalk')
 const isManualMode = answers => answers.preset === '__manual__'
 module.exports = class Creator {
     /**
@@ -56,6 +59,7 @@ module.exports = class Creator {
             const packageManager = 'npm';
             const pm = new PackageManager({context, forcePackageManager: packageManager})
 
+            warning(`★★  Creating project in ${context}...`)
             // 定义package.js 内容
             const pkg = {
                 name,
@@ -71,12 +75,10 @@ module.exports = class Creator {
             }
 
             pkg.dependencies.vue = '^3.2.16';
-            console.log(preset.plugins);
             const deps = Object.keys(preset.plugins)
             deps.forEach(dep => {
                 // TODO  这里获取git上的版本
-                if(dep!=='cli')pkg.devDependencies[dep] = 'latest'
-
+                if (!['cli', 'uearth'].includes(dep)) pkg.devDependencies[dep] = 'latest'
             })
 
             // 创建 package.json
@@ -86,6 +88,8 @@ module.exports = class Creator {
             //依赖下载
             // await pm.install();
 
+
+            info(`★ Invoking SetupTemplate...`)
             // //  获得插件依赖入口
             const plugins = await this.resolvePlugins(preset.plugins, pkg)
             const setupTemplate = new SetupTemplate(context, {
@@ -97,7 +101,22 @@ module.exports = class Creator {
                 extractConfigFiles: preset.useConfigFiles
             })
 
+            // 生成 README.md
+            if (!setupTemplate.files['README.md']) {
+                info()
+                info('📄  Generating README.md...')
+                await writeFileTree(context, {
+                    'README.md': generateReadme(setupTemplate.pkg, packageManager)
+                })
+            }
 
+            if (!cliOptions.skip) {
+                warning(
+                    `★★★  Get started with the following commands:\n\n` +
+                    (this.context === process.cwd() ? `` : chalk.cyan(` ${chalk.gray('$')} cd ${name}\n`)) +
+                    chalk.cyan(` ${chalk.gray('$')} ${packageManager === 'yarn' ? 'yarn dev' : packageManager === 'pnpm' ? 'pnpm run dev' : 'npm run dev'}`)
+                )
+            }
             // todo 安全考虑开发环境不能一直使用请求GitHub
             // const data = await fetch('https://api.github.com/repos/vuejs/vue-next/tags')
             // data.json().then(async (res) => {
@@ -141,7 +160,7 @@ module.exports = class Creator {
             // 手动选择
             preset = {
                 useConfigFiles: answers.useConfigFiles === 'files',
-                hasDefault:false,
+                hasDefault: false,
                 plugins: {}
             }
             answers.features = answers.features || []

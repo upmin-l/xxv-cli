@@ -1,6 +1,6 @@
 const execa = require('execa')
-const stripAnsi = require('strip-ansi')
-const semver = require('semver')
+const stripAnsi = require('strip-ansi') // 字符串中剥离ANSI转义代码
+const semver = require('semver')  // npm的语义版本器
 
 const {executeCommand} = require('./executeCommand')
 

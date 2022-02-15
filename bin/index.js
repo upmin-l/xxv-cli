@@ -11,7 +11,7 @@ program.command('create <app-name>')
     .option('-d, --default', 'Skip prompts and use default preset')
     .option('-f, --default', 'Skip prompts and use default preset')
     .option('-s, --default', 'Skip prompts and use default preset')
-    .option('-g, --default', 'Skip prompts and use default preset')
+    .option('-skip', 'Skip displaying "Get started" instructions')
     .action((name, options) => {
         if (minimist(process.argv.slice(3))._.length > 1) {
             logger.success('\n Info:你提供了多个参数。第一个将用作应用程序的名称，其余的将被忽略！')

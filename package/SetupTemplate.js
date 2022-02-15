@@ -75,7 +75,7 @@ module.exports = class SetupTemplate {
 
         // 取出依赖id
         // const pluginIds = this.plugins.map(p => p.id)
-
+        console.log('this.files',this.files)
 
         await this.resolveFiles()
 
@@ -85,6 +85,7 @@ module.exports = class SetupTemplate {
 
 
     async resolveFiles() {
+
         const files = this.files
         for (const middleware of this.fileMiddlewares) {
             await middleware(files, ejs.render)

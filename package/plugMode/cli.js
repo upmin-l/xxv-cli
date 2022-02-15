@@ -1,5 +1,6 @@
 const fs = require('fs-extra')
-const path =require('path')
+const path = require('path')
+const {info} = require('../../utils/logger')
 module.exports = (api, options) => {
     options.includes = ['vue']
     // 如果默认创建的
@@ -16,10 +17,10 @@ module.exports = (api, options) => {
         }
 
     }
-
-    const destPath = path.resolve(process.cwd(), options.projectName || '.','./public');
-    const rcPath =path.resolve(__dirname,'./vendor')
-    fs.copySync(rcPath,destPath)
+    info(`★ copy required files in ${options.projectName}...`)
+    const destPath = path.resolve(process.cwd(), options.projectName || '.', './public/vendor');
+    const rcPath = path.resolve(__dirname, './vendor')
+    fs.copySync(rcPath, destPath)
 
     process.on('unhandledRejection', (reason, p) => {
         console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);

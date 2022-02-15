@@ -32,6 +32,7 @@ class GeneratorAPI {
     // 入口源
     get entryFile() {
         if (this._entryFile) return this._entryFile
+        // 如果是ts 项目需要指定 不同格式文件
         return (this._entryFile = fs.existsSync(this.resolve('src/main.ts')) ? 'src/main.ts' : 'src/main.js')
     }
 
@@ -113,16 +114,15 @@ class GeneratorAPI {
         Error.captureStackTrace(obj)
         const callSite = obj.stack.split('\n')[3]
 
-        // the regexp for the stack when called inside a named function
+        // 在指定函数内调用时堆栈的正则
         const namedStackRegExp = /\s\((.*):\d+:\d+\)$/
-        // the regexp for the stack when called inside an anonymous
+        // 在匿名对象内部调用时堆栈的正则
         const anonymousStackRegExp = /at (.*):\d+:\d+$/
 
         let matchResult = callSite.match(namedStackRegExp)
         if (!matchResult) {
             matchResult = callSite.match(anonymousStackRegExp)
         }
-
         const fileName = matchResult[1]
         return path.dirname(fileName)
     }

@@ -17,6 +17,12 @@ const path = require("path");
 const fs = require('fs-extra')
 const isManualMode = answers => answers.preset === '__manual__'
 module.exports = class Creator {
+    /**
+     *
+     * @param name 项目名称
+     * @param context  执行命令的当前目录
+     * @param promptModules 预选项
+     */
     constructor(name, context, promptModules) {
         this.name = name
         this.context = context
@@ -258,8 +264,8 @@ module.exports = class Creator {
                 // 获取插件依赖入口
                 const apply = require(pluginPath) || (() => {
                 })
-                let options = rawPlugins[id] || {}
                 //处理 '名字 入口方法 配置项'
+                let options = rawPlugins[id] || {}
                 plugins.push({id, apply, options})
             }
         }

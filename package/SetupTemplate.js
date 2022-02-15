@@ -62,6 +62,7 @@ module.exports = class SetupTemplate {
         for (const plugin of this.plugins) {
             const {id, apply, options} = plugin
             const api = new GeneratorAPI(id, this, options, rootOptions)
+            // 这里apply 执行的就是每个依赖入口  plugMode
             await apply(api, options, rootOptions, invoking)
         }
     }

@@ -15,10 +15,11 @@ const sortObject = require('./util/sortObject')
 const PackageManager = require("./util/PackageManager");
 const path = require("path");
 const fs = require('fs-extra')
-const {warning, info,success} = require('../utils/logger')
+const {warning, info, success} = require('../utils/logger')
 const generateReadme = require('./util/generateReadme')
 const chalk = require('chalk')
 const isManualMode = answers => answers.preset === '__manual__'
+const isNoManualMode = answers => answers.preset !== '__manual__'
 module.exports = class Creator {
     /**
      *
@@ -33,9 +34,10 @@ module.exports = class Creator {
         this.savePrompts = this.resolveSavePrompts()
         this.promptCompleteCbs = []
         // 建立问答
-        const {presetPrompt, featurePrompt} = this.resolveIntroPrompts()
+        const {presetPrompt, featurePrompt, themePrompt} = this.resolveIntroPrompts()
         this.presetPrompt = presetPrompt
         this.featurePrompt = featurePrompt
+        this.themePrompt = themePrompt
         // 把 presetPrompt, featurePrompt问答 传进 ResolveMultistage 注入注册
         const promptAPI = new ResolveMultistage(this)
         promptModules.forEach(m => m(promptAPI))
@@ -49,7 +51,6 @@ module.exports = class Creator {
             preset.plugins['cli'] = Object.assign({
                 projectName: name
             }, preset)
-            // console.log('preset',preset);
             if (preset.plugins['vue-router']) {
                 if (preset.historyMode) {
                     preset.plugins['vue-router'].historyMode = true
@@ -156,6 +157,7 @@ module.exports = class Creator {
         let preset;
         if (answers.preset && answers.preset !== '__manual__') {
             preset = await this.resolvePreset(answers.preset)
+            preset.thmems = answers.themes
         } else {
             // 手动选择
             preset = {
@@ -185,7 +187,8 @@ module.exports = class Creator {
             this.presetPrompt,
             this.featurePrompt,
             ...this.injectedPrompts,
-            ...this.savePrompts
+            ...this.savePrompts,
+            this.themePrompt
         ]
     }
 
@@ -237,10 +240,23 @@ module.exports = class Creator {
             choices: [],
             pageSize: 10
         }
-
+        const themePrompt = {
+            name: 'themes',
+            type: 'list',
+            when: isNoManualMode,
+            message: '选择主题:',
+            default: '123',
+            choices: [
+                {value: '123', themes: 'Day'},
+                {value: '33', themes: 'Night'},
+            ],
+            pageSize: 10
+        }
+        // 返回 第一个问答及手动选择2级目录
         return {
             presetPrompt,
-            featurePrompt
+            featurePrompt,
+            themePrompt
         }
     }
 

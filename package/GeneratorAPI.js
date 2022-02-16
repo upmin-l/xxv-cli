@@ -67,7 +67,9 @@ class GeneratorAPI {
                         }
                         return filename
                     }).join('/')
+                    // 获取文件路径
                     const sourcePath = path.resolve(source, rcPath)
+                    //处理文件内容
                     const content = this.renderFile(sourcePath, data, ejsOptions)
                     // 只有文件不是空文件才添加
                     if (Buffer.isBuffer(content) || /[^\s]/.test(content)) {

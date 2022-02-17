@@ -19,7 +19,7 @@ const {warning, info, success} = require('../utils/logger')
 const generateReadme = require('./util/generateReadme')
 const chalk = require('chalk')
 const isManualMode = answers => answers.preset === '__manual__'
-const isNoManualMode = answers => answers.preset !== '__manual__'
+const isNoManualMode = answers => answers.preset === 'u_earth'
 module.exports = class Creator {
     /**
      *
@@ -87,7 +87,7 @@ module.exports = class Creator {
                 'package.json': JSON.stringify(pkg, null, 2)
             })
             //依赖下载
-            await pm.install();
+            // await pm.install();
 
             info(`★ Invoking SetupTemplate...`)
             // //  获得插件依赖入口
@@ -250,9 +250,10 @@ module.exports = class Creator {
             message: '选择主题:',
             default: 'day',
             choices: [
-                {value: 'day', themes: 'Day(蔚蓝)'},
-                {value: 'glimmer', themes: 'Glimmer(微光城市)'},
-                {value: 'future', themes: 'Future(回到未来)'},
+                {value: 'day', name: 'Day(蔚蓝)'},
+                {value: 'glimmer', name: 'Glimmer(微光城市)'},
+                {value: 'future', name: 'Future(回到未来)'},
+                {value: 'greenCity', name: 'GreenCity(绿色城市)'},
             ],
             pageSize: 10
         }

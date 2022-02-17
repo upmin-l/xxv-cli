@@ -4,6 +4,7 @@ const GeneratorAPI = require('./GeneratorAPI')
 const ejs = require('ejs')
 const path = require("path");
 const normalizeFilePaths = require('./util/normalizeFilePaths')
+const {runTransformation} = require('vue-codemod')
 const watchFiles = (files, set) => {
     return new Proxy(files, {
         set(target, key, value, receiver) {
@@ -75,7 +76,7 @@ module.exports = class SetupTemplate {
 
         // 取出依赖id
         // const pluginIds = this.plugins.map(p => p.id)
-        console.log('this.files',this.files)
+        console.log('this.files', this.files)
 
         await this.resolveFiles()
 
@@ -91,11 +92,19 @@ module.exports = class SetupTemplate {
             await middleware(files, ejs.render)
         }
         normalizeFilePaths(files)
-
+        console.log('this.files', this.files);
         // 处理 语句 注入
         Object.keys(files).forEach(file => {
+            console.log('this.imports', this.imports);
             let imports = this.imports[file]
             imports = imports instanceof Set ? Array.from(imports) : imports
+            if (imports && imports.length > 0) {
+                files[file] = runTransformation(
+                    { path: file, source: files[file] },
+                    require('./util/injectImports'),
+                    { imports }
+                )
+            }
         })
     }
 

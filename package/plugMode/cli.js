@@ -11,6 +11,7 @@ function copyFiles([...ags], ulrStr) {
 
 module.exports = (api, options) => {
     options.includes = ['vue']
+    options.useEarth = Object.prototype.hasOwnProperty.call(options, ' uearth')
     // 如果默认创建的
     if (options.hasDefault) {
 
@@ -30,7 +31,7 @@ module.exports = (api, options) => {
     copyFiles([options.projectName || '.', './public/vendor'], './vendor')
 
     if (options.useEarth) {
-        copyFiles([options.projectName || '.', './public/map'],`./mapThemes/${options.thmems}`)
+        copyFiles([options.projectName || '.', './public/map'], `./mapThemes/${options.thmems}`)
     }
     process.on('unhandledRejection', (reason, p) => {
         console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);

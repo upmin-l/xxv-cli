@@ -12,9 +12,10 @@ module.exports = cli => {
         message: '选择主题:',
         default: 'day',
         choices: [
-            {value: 'day', themes: 'Day(蔚蓝)'},
-            {value: 'glimmer', themes: 'Glimmer(微光城市)'},
-            {value: 'future', themes: 'Future(回到未来)'},
+            {value: 'day', name: 'Day(蔚蓝)'},
+            {value: 'glimmer', name: 'Glimmer(微光城市)'},
+            {value: 'future', name: 'Future(回到未来)'},
+            {value: 'greenCity', name: 'GreenCity(绿色城市)'},
         ],
         pageSize: 10
     })

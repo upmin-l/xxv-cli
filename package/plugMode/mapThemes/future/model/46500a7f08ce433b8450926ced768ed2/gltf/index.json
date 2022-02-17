@@ -1,0 +1,26 @@
+{
+  "sourceFile": "D:\\work\\46500a7f08ce433b8450926ced768ed2_999_转换中\\MAX\\erBoolen_20.maxbk0.max",
+  "gltfFiles": [
+    "TNQ8ZQ5UNN281NR3Z7V5EJ7X1Z7EZT74T.gltf"
+  ],
+  "texFiles": {
+    "7KM9DWEQD3SGWU6T1JCIQDW5OJ6518SYJ": ".bin",
+    "D25EZNY7DSR3Z76D7T0QQ8KG3TNGF18EH": "噪波3.jpg",
+    "1UGA66M37U8RF6UY8ZV292Q4HN1E30CQ8": "噪波2_toMask.png",
+    "WW2976XZJCCQY8X1D3QR32SP77IMHT0IQ": "zz02_toMask.png"
+  },
+  "size": [
+    145.759,
+    145.759,
+    145.759
+  ],
+  "faces": 2560,
+  "verts": 0,
+  "nodes": 2,
+  "createTime": "2020-06-18 0:35:00",
+  "author": "1854",
+  "computer": "DHJP-20160806JM",
+  "max": "#(22000, 55, 0, 22, 0, 0, 757, 2020, \"\")",
+  "version": "2.1",
+  "extensionsFile": "extensions.json"
+}

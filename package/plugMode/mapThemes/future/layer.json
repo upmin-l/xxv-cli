@@ -1,0 +1,684 @@
+[
+    {
+        "type": "FeatureLayer",
+        "enable": true,
+        "labelId": 5,
+        "url": "/geojson/ba8265687421dd912086340e8b9086de.geojson",
+        "id": 98231,
+        "renderOrder": -40,
+        "geometryType": "GeoPolygon",
+        "offsetHeight": 0.0,
+        "extrudeField": "无",
+        "extrudeFactor": 1,
+        "layerConfig": {
+            "offsetHeightAdded": 0,
+            "color": "rgba(40,151,124,1)",
+            "type": "vector",
+            "effect": false,
+            "outlineColor": "rgba(255,64,39,1)",
+            "outlineUseColor": false,
+            "outlineImageUrl": "/image/lightFlow_strip.png",
+            "outlineWidth": 0,
+            "outlineGlowStrength": 1,
+            "outlinePostRadialBlur": false,
+            "outlineType": "vector",
+            "outlineLineType": "Plane",
+            "outlineSizeAttenuation": true,
+            "outlineSpeed": 0,
+            "outlineEffect": false,
+            "outlineOpacity": 1,
+            "outlineBlending": false,
+            "useBoundary": false,
+            "boundaryExtrudeHeight": 8000,
+            "boundaryUseColor": false,
+            "boundaryColor": "rgba(255,255,255,1)",
+            "boundaryImageUrl": "/image/g_1_w_2.png",
+            "boundaryAlphaImageUrl": "/image/uvMap20.png",
+            "boundaryBlending": false,
+            "boundaryAlphaSpeed": [
+                1.5,
+                0
+            ],
+            "boundarySpeed": [
+                0.25,
+                0
+            ],
+            "boundaryOpacity": 1,
+            "extrudeFactor": 1,
+            "extrudeField": "无",
+            "lights": true,
+            "postRadialBlur": false,
+            "textureSize": [
+                100,
+                100
+            ],
+            "blending": false,
+            "envMapIntensity": 0.98,
+            "envMapUrl": "/image/up.jpg",
+            "transparent": false,
+            "glowStrength": 0.5,
+            "offset": [
+                -0.33,
+                -0.09
+            ],
+            "metalness": [
+                0.6,
+                0.6
+            ],
+            "roughness": [
+                0.4,
+                0.4
+            ],
+            "repeat": [
+                0.2,
+                0.09
+            ],
+            "windowBrightness": 1.7,
+            "windowColor": "rgb(7,168,255)",
+            "windowImageUrl": "/image/buildingMask1.jpg",
+            "isOpenWindow": true,
+            "isCool": false,
+            "reflectedPanorama": false,
+            "reflectedPanoramaAngle": "",
+            "AOConfig": {
+                "normal": {
+                    "useAoMap": true,
+                    "aoMapIntensity": 0.85
+                },
+                "lights": {
+                    "useAoMap": false,
+                    "aoMapIntensity": 0.6
+                },
+                "cool": {
+                    "useAoMap": false,
+                    "aoMapIntensity": 0
+                }
+            },
+            "windowTextureWrap": "normal",
+            "windowTextureSize": [
+                10,
+                10
+            ],
+            "windowTextureAroundType": "windowTextureSize",
+            "postRadialBlur2": false,
+            "textureWrap": "stretch",
+            "opacity": 0.7,
+            "useAoMap": false,
+            "aoMapIntensity": 0.6
+        },
+        "name": "Greenland",
+        "isAd": false,
+        "isEffectEarth": 0,
+        "geoDataId": 37803,
+        "fieldNames": "[]"
+    },
+    {
+        "type": "BigBuildingLayer",
+        "enable": true,
+        "labelId": 1,
+        "id": 98216,
+        "renderOrder": -39,
+        "geometryType": "GeoBuilding",
+        "sync": "true",
+        "offsetHeight": 0.0,
+        "extrudeField": "height",
+        "extrudeFactor": 1,
+        "layerConfig": {
+            "specularFactor": [
+                0,
+                0
+            ],
+            "offsetHeightAdded": 0,
+            "blending": false,
+            "envMapIntensity": 3.21,
+            "envMapUrl": "/image/20210628162949684_783733.jpg",
+            "type": "cool",
+            "extrudeFactor": 1,
+            "extrudeField": "height",
+            "transparent": false,
+            "textureWrap": "stretch",
+            "postRadialBlur": false,
+            "glowStrength": 0.32,
+            "effect": true,
+            "offset": [
+                0,
+                0.3
+            ],
+            "roughness": [
+                0.7,
+                0.3
+            ],
+            "metalness": [
+                0.6,
+                1
+            ],
+            "repeat": [
+                1,
+                1
+            ],
+            "windowBrightness": 1.9,
+            "windowColor": "rgb(118,146,255)",
+            "windowImageUrl": "/image/icon_20211111170447125_840415.png",
+            "isOpenWindow": true,
+            "isCool": true,
+            "lights": true,
+            "reflectedPanorama": false,
+            "reflectedPanoramaAngle": "",
+            "textureSize": [
+                3,
+                3
+            ],
+            "AOConfig": {
+                "normal": {
+                    "useAoMap": true,
+                    "aoMapIntensity": 0.85
+                },
+                "lights": {
+                    "useAoMap": true,
+                    "aoMapIntensity": 0.6
+                },
+                "cool": {
+                    "useAoMap": true,
+                    "aoMapIntensity": 0.3
+                }
+            },
+            "windowTextureWrap": "around",
+            "windowTextureSize": [
+                110,
+                70
+            ],
+            "windowTextureAroundType": "windowTextureSize",
+            "speed": [
+                0,
+                0
+            ],
+            "windowSpeed": [
+                0,
+                0
+            ],
+            "imageUrl": [
+                {
+                    "value": [
+                        "/image/icon_20211012171542865_497654.png",
+                        "/image/icon_20211013154515600_619697.png"
+                    ],
+                    "condition": "[height<=90.0]"
+                },
+                {
+                    "value": [
+                        "/image/icon_20211013113756655_583088.png",
+                        "/image/icon_20211013152528461_294375.png"
+                    ],
+                    "condition": "[height>90.0]&&[height<=140.0]"
+                },
+                {
+                    "value": [
+                        "/image/icon_20211013145239356_675562.png",
+                        "/image/icon_20211103134838120_326541.png"
+                    ],
+                    "condition": "[height>140.0]"
+                }
+            ],
+            "opacity": 1.0,
+            "useAoMap": true,
+            "aoMapIntensity": 0.3
+        },
+        "name": "Building",
+        "isAd": false,
+        "isEffectEarth": 0,
+        "geoDataId": 37670,
+        "fieldNames": "[{\"name\":\"id\",\"type\":\"String\"}, {\"name\":\"height\",\"type\":\"Number\",\"value\":[0, 478]}]"
+    },
+    {
+        "type": "FeatureLayer",
+        "enable": true,
+        "labelId": 7,
+        "id": 98217,
+        "renderOrder": -38,
+        "geometryType": "GeoPolygon",
+        "offsetHeight": 0.0,
+        "extrudeField": "无",
+        "extrudeFactor": 1,
+        "layerConfig": {
+            "offsetHeightAdded": 0,
+            "color": "rgba(55,101,159,1)",
+            "type": "vector",
+            "effect": false,
+            "outlineColor": "rgba(255,64,39,1)",
+            "outlineUseColor": false,
+            "outlineImageUrl": "/image/lightFlow_strip.png",
+            "outlineWidth": 0,
+            "outlineGlowStrength": 1,
+            "outlinePostRadialBlur": false,
+            "outlineType": "vector",
+            "outlineLineType": "Plane",
+            "outlineSizeAttenuation": true,
+            "outlineSpeed": 0,
+            "outlineEffect": false,
+            "outlineOpacity": 0,
+            "outlineBlending": false,
+            "useBoundary": false,
+            "boundaryExtrudeHeight": 8000,
+            "boundaryUseColor": false,
+            "boundaryColor": "rgba(255,255,255,1)",
+            "boundaryImageUrl": "/image/g_1_w_2.png",
+            "boundaryAlphaImageUrl": "/image/uvMap20.png",
+            "boundaryBlending": false,
+            "boundaryAlphaSpeed": [
+                1.5,
+                0
+            ],
+            "boundarySpeed": [
+                0.25,
+                0
+            ],
+            "boundaryOpacity": 1,
+            "extrudeFactor": 1,
+            "extrudeField": "无",
+            "lights": true,
+            "postRadialBlur": false,
+            "postRadialBlur2": false,
+            "textureSize": [
+                100,
+                100
+            ],
+            "blending": false,
+            "envMapIntensity": 0.98,
+            "envMapUrl": "/image/up.jpg",
+            "transparent": false,
+            "glowStrength": 0.5,
+            "offset": [
+                -0.33,
+                -0.09
+            ],
+            "metalness": [
+                0.6,
+                0.6
+            ],
+            "roughness": [
+                0.4,
+                0.4
+            ],
+            "repeat": [
+                0.2,
+                0.09
+            ],
+            "windowBrightness": 1.7,
+            "windowColor": "rgb(7,168,255)",
+            "windowImageUrl": "/image/buildingMask1.jpg",
+            "isOpenWindow": true,
+            "isCool": false,
+            "reflectedPanorama": false,
+            "reflectedPanoramaAngle": "",
+            "AOConfig": {
+                "normal": {
+                    "useAoMap": true,
+                    "aoMapIntensity": 0.85
+                },
+                "lights": {
+                    "useAoMap": true,
+                    "aoMapIntensity": 0.6
+                },
+                "cool": {
+                    "useAoMap": false,
+                    "aoMapIntensity": 0
+                }
+            },
+            "windowTextureWrap": "normal",
+            "windowTextureSize": [
+                10,
+                10
+            ],
+            "windowTextureAroundType": "windowTextureSize",
+            "textureWrap": "stretch",
+            "opacity": 1.0,
+            "useAoMap": true,
+            "aoMapIntensity": 0.6
+        },
+        "name": "Water",
+        "isAd": false,
+        "isEffectEarth": 0,
+        "geoDataId": 37809,
+        "fieldNames": "[]"
+    },
+    {
+        "type": "FeatureLayer",
+        "enable": true,
+        "labelId": 7,
+        "id": 98228,
+        "renderOrder": -37,
+        "geometryType": "GeoPolygon",
+        "offsetHeight": 0.0,
+        "extrudeField": "无",
+        "extrudeFactor": 1,
+        "layerConfig": {
+            "offsetHeightAdded": 0,
+            "color": "rgba(55,101,159,1)",
+            "type": "vector",
+            "effect": false,
+            "outlineColor": "rgba(255,64,39,1)",
+            "outlineUseColor": false,
+            "outlineImageUrl": "/image/lightFlow_strip.png",
+            "outlineWidth": 0,
+            "outlineGlowStrength": 1,
+            "outlinePostRadialBlur": false,
+            "outlineType": "vector",
+            "outlineLineType": "Plane",
+            "outlineSizeAttenuation": true,
+            "outlineSpeed": 0,
+            "outlineEffect": false,
+            "outlineOpacity": 0,
+            "outlineBlending": false,
+            "useBoundary": false,
+            "boundaryExtrudeHeight": 8000,
+            "boundaryUseColor": false,
+            "boundaryColor": "rgba(255,255,255,1)",
+            "boundaryImageUrl": "/image/g_1_w_2.png",
+            "boundaryAlphaImageUrl": "/image/uvMap20.png",
+            "boundaryBlending": false,
+            "boundaryAlphaSpeed": [
+                1.5,
+                0
+            ],
+            "boundarySpeed": [
+                0.25,
+                0
+            ],
+            "boundaryOpacity": 1,
+            "extrudeFactor": 1,
+            "extrudeField": "无",
+            "lights": true,
+            "postRadialBlur": false,
+            "postRadialBlur2": false,
+            "textureSize": [
+                100,
+                100
+            ],
+            "blending": false,
+            "envMapIntensity": 0.98,
+            "envMapUrl": "/image/up.jpg",
+            "transparent": false,
+            "glowStrength": 0.5,
+            "offset": [
+                -0.33,
+                -0.09
+            ],
+            "metalness": [
+                0.6,
+                0.6
+            ],
+            "roughness": [
+                0.4,
+                0.4
+            ],
+            "repeat": [
+                0.2,
+                0.09
+            ],
+            "windowBrightness": 1.7,
+            "windowColor": "rgb(7,168,255)",
+            "windowImageUrl": "/image/buildingMask1.jpg",
+            "isOpenWindow": true,
+            "isCool": false,
+            "reflectedPanorama": false,
+            "reflectedPanoramaAngle": "",
+            "AOConfig": {
+                "normal": {
+                    "useAoMap": true,
+                    "aoMapIntensity": 0.85
+                },
+                "lights": {
+                    "useAoMap": true,
+                    "aoMapIntensity": 0.6
+                },
+                "cool": {
+                    "useAoMap": false,
+                    "aoMapIntensity": 0
+                }
+            },
+            "windowTextureWrap": "normal",
+            "windowTextureSize": [
+                10,
+                10
+            ],
+            "windowTextureAroundType": "windowTextureSize",
+            "textureWrap": "stretch",
+            "opacity": 1.0,
+            "useAoMap": true,
+            "aoMapIntensity": 0.6
+        },
+        "name": "WaterImportant",
+        "isAd": false,
+        "isEffectEarth": 0,
+        "geoDataId": 37804,
+        "fieldNames": "[]"
+    },
+    {
+        "type": "FeatureLayer",
+        "enable": true,
+        "labelId": 135,
+        "id": 98227,
+        "renderOrder": -36,
+        "geometryType": "GeoLine",
+        "offsetHeight": 0.0,
+        "layerConfig": {
+            "offsetHeightAdded": 0,
+            "type": "image",
+            "glowStrength": 0.3,
+            "postRadialBlur": false,
+            "texType": "image",
+            "width": 6,
+            "speed": 1,
+            "effect": true,
+            "blending": true,
+            "sizeAttenuation": true,
+            "textureWrap": "stretch",
+            "textureSize": 100,
+            "uvRatio": [
+                1.0,
+                1.0
+            ],
+            "postRadialBlur2": false,
+            "lineType": "Plane",
+            "useColor": true,
+            "color": "rgba(255,156,124,1)",
+            "imageUrl": "/image/icon_20211013172130277_225166.png",
+            "opacity": 1.0
+        },
+        "name": "RoadImportant",
+        "isAd": false,
+        "isEffectEarth": 0,
+        "geoDataId": 37807,
+        "fieldNames": "[]"
+    },
+    {
+        "type": "FeatureLayer",
+        "enable": true,
+        "labelId": 2,
+        "id": 98219,
+        "renderOrder": -35,
+        "geometryType": "GeoLine",
+        "offsetHeight": 0.0,
+        "layerConfig": {
+            "offsetHeightAdded": 0,
+            "type": "image",
+            "glowStrength": 0.3,
+            "postRadialBlur": false,
+            "texType": "image",
+            "width": 6,
+            "speed": 1.6,
+            "effect": true,
+            "blending": true,
+            "sizeAttenuation": true,
+            "textureWrap": "stretch",
+            "textureSize": 100,
+            "uvRatio": [
+                1.0,
+                1.0
+            ],
+            "postRadialBlur2": false,
+            "lineType": "Plane",
+            "useColor": true,
+            "color": "rgba(255,156,124,1)",
+            "imageUrl": "/image/icon_20211013172130277_225166.png",
+            "opacity": 1.0
+        },
+        "name": "RoadMain",
+        "isAd": false,
+        "isEffectEarth": 0,
+        "geoDataId": 37805,
+        "fieldNames": "[]"
+    },
+    {
+        "type": "FeatureLayer",
+        "enable": true,
+        "labelId": 3,
+        "id": 98220,
+        "renderOrder": -34,
+        "geometryType": "GeoLine",
+        "offsetHeight": 0.0,
+        "layerConfig": {
+            "offsetHeightAdded": 0,
+            "type": "image",
+            "glowStrength": 0.2,
+            "postRadialBlur": false,
+            "texType": "image",
+            "width": 8,
+            "speed": 1,
+            "effect": true,
+            "blending": true,
+            "sizeAttenuation": true,
+            "textureWrap": "stretch",
+            "textureSize": 100,
+            "uvRatio": [
+                1.0,
+                1.0
+            ],
+            "postRadialBlur2": false,
+            "lineType": "Plane",
+            "useColor": true,
+            "color": "rgba(105,255,249,1)",
+            "imageUrl": "/image/icon_20211009171507766_557679.png",
+            "opacity": 1.0
+        },
+        "name": "RoadSub",
+        "isAd": false,
+        "isEffectEarth": 0,
+        "geoDataId": 37810,
+        "fieldNames": "[]"
+    },
+    {
+        "type": "FeatureLayer",
+        "enable": true,
+        "labelId": 4,
+        "id": 98229,
+        "renderOrder": -33,
+        "geometryType": "GeoLine",
+        "offsetHeight": 0.0,
+        "layerConfig": {
+            "offsetHeightAdded": 0,
+            "type": "image",
+            "glowStrength": 0.2,
+            "postRadialBlur": false,
+            "texType": "image",
+            "width": 4,
+            "speed": 1,
+            "effect": true,
+            "blending": true,
+            "sizeAttenuation": true,
+            "textureWrap": "stretch",
+            "textureSize": 100,
+            "uvRatio": [
+                1.0,
+                1.0
+            ],
+            "postRadialBlur2": false,
+            "lineType": "Plane",
+            "useColor": true,
+            "color": "rgba(105,255,249,1)",
+            "imageUrl": "/image/icon_20211009171507766_557679.png",
+            "opacity": 1.0
+        },
+        "name": "RoadNorm",
+        "isAd": false,
+        "isEffectEarth": 0,
+        "geoDataId": 37814,
+        "fieldNames": "[]"
+    },
+    {
+        "type": "FeatureLayer",
+        "enable": true,
+        "labelId": 66,
+        "id": 98218,
+        "renderOrder": -32,
+        "geometryType": "GeoLine",
+        "offsetHeight": 0.0,
+        "layerConfig": {
+            "offsetHeightAdded": 0,
+            "type": "image",
+            "glowStrength": 0.3,
+            "postRadialBlur": false,
+            "texType": "image",
+            "width": 1,
+            "speed": 1,
+            "effect": true,
+            "blending": true,
+            "sizeAttenuation": true,
+            "textureWrap": "stretch",
+            "textureSize": 100,
+            "uvRatio": [
+                1.0,
+                1.0
+            ],
+            "postRadialBlur2": false,
+            "lineType": "Plane",
+            "useColor": true,
+            "color": "rgba(255,135,41,1)",
+            "imageUrl": "/image/icon_20211009171838663_461509.png",
+            "opacity": 1.0
+        },
+        "name": "Railway",
+        "isAd": false,
+        "isEffectEarth": 0,
+        "geoDataId": 37813,
+        "fieldNames": "[{\"name\":\"id\",\"type\":\"String\"}]"
+    },
+    {
+        "type": "FeatureLayer",
+        "enable": true,
+        "labelId": 83,
+        "id": 98223,
+        "renderOrder": -31,
+        "geometryType": "GeoLine",
+        "offsetHeight": 0.0,
+        "layerConfig": {
+            "offsetHeightAdded": 0,
+            "type": "image",
+            "glowStrength": 0.3,
+            "postRadialBlur": false,
+            "texType": "image",
+            "width": 6,
+            "speed": 1,
+            "effect": true,
+            "blending": true,
+            "sizeAttenuation": true,
+            "textureWrap": "stretch",
+            "textureSize": 100,
+            "uvRatio": [
+                1.0,
+                1.0
+            ],
+            "postRadialBlur2": false,
+            "lineType": "Plane",
+            "useColor": true,
+            "color": "rgba(255,156,124,1)",
+            "imageUrl": "/image/icon_20211013172130277_225166.png",
+            "opacity": 1.0
+        },
+        "name": "Metro",
+        "isAd": false,
+        "isEffectEarth": 0,
+        "geoDataId": 37808,
+        "fieldNames": "[]"
+    }
+]

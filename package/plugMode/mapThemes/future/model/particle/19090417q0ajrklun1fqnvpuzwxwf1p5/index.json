@@ -1,0 +1,184 @@
+{
+   "strId": "cdebbbd0-9517-4746-a735-8cb6b7a73025",
+   "listGroups": [{
+      "fTrailLife": 0.5,
+      "iMaxParticleCount": 1000,
+      "strId": "d63a76e1-6740-4823-98bb-25834f4e6b1f",
+      "texture": {
+         "iLoop": 1,
+         "name": "粒子线",
+         "vec2Frames": {
+            "x": 1,
+            "y": 1
+         },
+         "iFrameCount": 1,
+         "url": "/19090414dnr5axqd41risvqpawuqzif6.png"
+      },
+      "strIsDepthWrite": "false",
+      "fScale": 625,
+      "strUseMesh": "false",
+      "textureTrail": {
+         "iLoop": 1,
+         "name": "32x32_star.png",
+         "vec2Frames": {
+            "x": 1,
+            "y": 1
+         },
+         "iFrameCount": 1,
+         "url": "/18092617nyspq5moaka1i2fhvs1hh66s.png"
+      },
+      "strHasPerspective": "true",
+      "strIsColorize": "true",
+      "iBlendingMode": 2,
+      "strEnableTrail": "false",
+      "strIsTransparent": "true",
+      "fTrailWidthStart": 1,
+      "vec4Quaternion": {
+         "x": 0,
+         "y": 0,
+         "z": 0,
+         "w": 1
+      },
+      "arrayMeshParams": [1, 1, 1, 1, 1, 1],
+      "strMeshUrl": "BuildIn/Box",
+      "fFixedTimeStep": 0.33,
+      "fAlphaTest": 0,
+      "strIsDepthTest": "false",
+      "listEmitters": [{
+         "strIsLookAtCameraOnlyY": "false",
+         "wiggle": {
+            "fSpread": 0,
+            "fValue": 0
+         },
+         "strId": "7d1ccf65-f49a-4d11-b193-9fd07c043230",
+         "iDirection": 1,
+         "rotation": {
+            "vec3AxisSpread": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+            },
+            "strIsRandomise": "false",
+            "fAngleSpread": 0,
+            "vec3Center": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+            },
+            "fAngle": 0,
+            "strIsStatic": "false",
+            "vec3Axis": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+            }
+         },
+         "fActiveMultiplier": 1,
+         "velocity": {
+            "strIsRandomise": "false",
+            "vec3Value": {
+               "x": 0,
+               "y": 5,
+               "z": 0
+            },
+            "iDistribution": 1,
+            "vec3Spread": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+            }
+         },
+         "listSize": [{
+            "strIsRandomise": "true",
+            "fSpread": 10,
+            "fValue": 40
+         }],
+         "acceleration": {
+            "strIsRandomise": "false",
+            "vec3Value": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+            },
+            "iDistribution": 1,
+            "vec3Spread": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+            }
+         },
+         "trail": {
+            "fSpread": 0,
+            "fStep": 0,
+            "fStepSpread": 0,
+            "fValue": 0
+         },
+         "maxAge": {
+            "fSpread": 10,
+            "fValue": 10
+         },
+         "listAngle": [{
+            "strIsRandomise": "false",
+            "fSpread": 0,
+            "fValue": 0
+         }],
+         "fDuration": 10000,
+         "listColor": [{
+            "strIsRandomise": "false",
+            "vec3Value": {
+               "x": 0.9294117647058824,
+               "y": 0.23137254901960785,
+               "z": 0.5647058823529412
+            },
+            "vec3Spread": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+            }
+         }],
+         "strIsStatic": "false",
+         "position": {
+            "strIsRandomise": "true",
+            "fRadius": 0,
+            "vec3SpreadClamp": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+            },
+            "vec3Value": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+            },
+            "vec3RadiusScale": {
+               "x": 1,
+               "y": 1,
+               "z": 1
+            },
+            "iDistribution": 1,
+            "vec3Spread": {
+               "x": 100,
+               "y": 0,
+               "z": 100
+            }
+         },
+         "drag": {
+            "strIsRandomise": "true",
+            "fSpread": 2,
+            "fValue": 0
+         },
+         "iDistribution": 1,
+         "iParticleCount": 108,
+         "listOpacity": [{
+            "strIsRandomise": "false",
+            "fSpread": 0,
+            "fValue": 1
+         }],
+         "strIsLookAtCamera": "false"
+      }],
+      "strIsFog": "false",
+      "fTrailWidthEnd": 1
+   }],
+   "_attr": "ParticleData",
+   "fPPAfterImageValue": 0
+}

@@ -66,20 +66,20 @@ module.exports = class Creator {
                 name,
                 version: '0.1.0',
                 private: true,
-                dependencies: {},
                 scripts: {
                     dev: "vite",
                     build: "vite build",
                     preview: "vite preview"
                 },
+                dependencies: {},
                 devDependencies: {}
             }
 
             pkg.dependencies.vue = '^3.2.16';
             const deps = Object.keys(preset.plugins)
             deps.forEach(dep => {
-                // TODO  这里获取git上的版本
-                if (!['cli', 'uearth'].includes(dep)) pkg.devDependencies[dep] = 'latest'
+                // TODO  这里获取git上的版本 需要区分依赖包
+                if (!['cli', 'uearth','spray'].includes(dep)) pkg.devDependencies[dep] = 'latest'
             })
 
             // 创建 package.json
@@ -87,8 +87,7 @@ module.exports = class Creator {
                 'package.json': JSON.stringify(pkg, null, 2)
             })
             //依赖下载
-            // await pm.install();
-
+            await pm.install();
 
             info(`★ Invoking SetupTemplate...`)
             // //  获得插件依赖入口
@@ -163,7 +162,11 @@ module.exports = class Creator {
             preset = {
                 useConfigFiles: answers.useConfigFiles === 'files',
                 hasDefault: false,
-                plugins: {}
+                // Todo 硬编码 待优化
+                plugins: {
+                    'vite': {},
+                    '@vitejs/plugin-vue': {}
+                }
             }
             answers.features = answers.features || []
             // 运行cb回调注册提示模块，完成预设
@@ -245,10 +248,11 @@ module.exports = class Creator {
             type: 'list',
             when: isNoManualMode,
             message: '选择主题:',
-            default: '123',
+            default: 'day',
             choices: [
-                {value: '123', themes: 'Day'},
-                {value: '33', themes: 'Night'},
+                {value: 'day', themes: 'Day(蔚蓝)'},
+                {value: 'glimmer', themes: 'Glimmer(微光城市)'},
+                {value: 'future', themes: 'Future(回到未来)'},
             ],
             pageSize: 10
         }

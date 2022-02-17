@@ -5,10 +5,28 @@
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
+    <link rel="stylesheet" href="/style/reset.css" />
+    <script src="/vendor/thingjs.min-V1.2.7.25.js"></script>
+    <%_ if (useEarth) { _%>
+    <script src="/vendor/uearth.min.v1.7.8.22.js"></script>
+    <%_ } %>
+    <script src="/vendor/cached.downloader.min.js"></script>
+    <script type="module" src="/config.js"></script>
   </head>
   <body>
 
     <div id="app"></div>
+    <script>
+      // 添加模型缓存，加快加载速度
+      if (typeof CachedDownloader !== "undefined") {
+        CachedDownloader.getInstance().onRequest = function (url) {
+          const extensions = ["glb", "gltf", "bin"];
+          // Check extension
+          const extension = url.getExtension();
+          return extensions.indexOf(extension.toLowerCase()) !== -1;
+        };
+      }
+    </script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

@@ -59,7 +59,6 @@ module.exports = class SetupTemplate {
         //     const api = new GeneratorAPI(id, this, {}, rootOptions)
         //     await apply(api, {}, rootOptions, invoking)
         // }
-
         for (const plugin of this.plugins) {
             const {id, apply, options} = plugin
             const api = new GeneratorAPI(id, this, options, rootOptions)
@@ -76,10 +75,8 @@ module.exports = class SetupTemplate {
 
         // 取出依赖id
         // const pluginIds = this.plugins.map(p => p.id)
-        console.log('this.files', this.files)
 
         await this.resolveFiles()
-
         this.files['package.json'] = JSON.stringify(this.pkg, null, 2) + '\n'
         await writeFileTree(this.context, this.files, initialFiles, this.filesModifyRecord)
     }
@@ -92,10 +89,8 @@ module.exports = class SetupTemplate {
             await middleware(files, ejs.render)
         }
         normalizeFilePaths(files)
-        console.log('this.files', this.files);
         // 处理 语句 注入
         Object.keys(files).forEach(file => {
-            console.log('this.imports', this.imports);
             let imports = this.imports[file]
             imports = imports instanceof Set ? Array.from(imports) : imports
             if (imports && imports.length > 0) {
@@ -115,7 +110,7 @@ module.exports = class SetupTemplate {
             .concat(Object.keys(this.pkg.devDependencies || {}))
             .forEach(id => {
                 if (!['vite', '@vitejs/plugin-vue', 'vue'].includes(id)) {
-                    const pluginPath = path.resolve(__dirname, `plugMode/${id}.js`)
+                    const pluginPath = path.resolve(__dirname, `cli-${id}`)
                     const apply = require(pluginPath) || (() => {
                     })
                     allPlugins.push({id, apply, options: {}})

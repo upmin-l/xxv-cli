@@ -10,14 +10,14 @@ function copyFiles([...ags], ulrStr) {
 }
 
 module.exports = (api, options) => {
+    const {plugins} = options
     options.includes = ['vue']
-    options.useEarth = Object.prototype.hasOwnProperty.call(options, ' uearth')
+    options.useEarth =options.useEarth || Object.prototype.hasOwnProperty.call(plugins, 'uearth')
     // 如果默认创建的
     if (options.hasDefault) {
 
     } else {
         // 手动选项创建
-        const {plugins} = options
         // vite.config.js 的 include
         for (const plugin in plugins) {
             if (plugins[plugin].include) {
@@ -28,15 +28,15 @@ module.exports = (api, options) => {
     }
     info(`★ copy required files in ${options.projectName}...`)
 
-    copyFiles([options.projectName || '.', './public/vendor'], './vendor')
+    copyFiles([options.projectName || '.', './public/vendor'], '../plugMode/vendor')
+    console.log('options', options);
 
     if (options.useEarth) {
-        copyFiles([options.projectName || '.', './public/map'], `./mapThemes/${options.thmems}`)
+        copyFiles([options.projectName || '.', './public/map'], `../plugMode/mapThemes/${options.thmems}`)
     }
     process.on('unhandledRejection', (reason, p) => {
         console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
     });
-    console.log('options', options);
     // Todo vendor 文件下的编译过的文件出现不符合promise规范,导致ejs无法渲染报错
-    api.render('./template', options)
+    api.render('../plugMode/template', options)
 }

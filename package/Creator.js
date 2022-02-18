@@ -90,7 +90,7 @@ module.exports = class Creator {
             // await pm.install();
 
             info(`★ Invoking SetupTemplate...`)
-            // //  获得插件依赖入口
+            // //  获得插件依赖入口+
             const plugins = await this.resolvePlugins(preset.plugins, pkg)
             const setupTemplate = new SetupTemplate(context, {
                 pkg,
@@ -156,7 +156,6 @@ module.exports = class Creator {
         let preset;
         if (answers.preset && answers.preset !== '__manual__') {
             preset = await this.resolvePreset(answers.preset)
-            preset.thmems = answers.themes
         } else {
             // 手动选择
             preset = {
@@ -172,6 +171,7 @@ module.exports = class Creator {
             // 运行cb回调注册提示模块，完成预设
             this.promptCompleteCbs.forEach(cb => cb(answers, preset))
         }
+        preset.thmems = answers.themes
         if (answers.save && answers.saveName) {
             savePreset(answers.saveName, preset)
         }
@@ -299,8 +299,9 @@ module.exports = class Creator {
         rawPlugins = sortObject(rawPlugins, ['cli'], true)
         const plugins = [];
         for (const id of Object.keys(rawPlugins)) {
-            if (!['@vitejs/plugin-vue'].includes(id)) {
-                const pluginPath = path.resolve(__dirname, `plugMode/${id}.js`)
+            // Todo  待优化 使用 try 来执行比较好，尽量不要用字符串来判断
+            if (!['vite','@vitejs/plugin-vue','uearth'].includes(id)) {
+                const pluginPath = path.resolve(__dirname, `cli-${id}`)
                 // 获取插件依赖入口
                 const apply = require(pluginPath) || (() => {
                 })
@@ -309,6 +310,7 @@ module.exports = class Creator {
                 plugins.push({id, apply, options})
             }
         }
+
         return plugins
     }
 }

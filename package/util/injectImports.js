@@ -1,7 +1,5 @@
 module.exports = function injectImports (fileInfo, api, { imports }) {
-  console.log('fileInfo',fileInfo);
-  console.log("api",api);
-  console.log('{imports}',{imports});
+
   const j = api.jscodeshift
   const root = j(fileInfo.source)
 

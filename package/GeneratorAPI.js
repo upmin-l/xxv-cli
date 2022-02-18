@@ -4,6 +4,7 @@ const globby = require('globby')
 const {isBinaryFileSync} = require("isbinaryfile")
 const yaml = require('yaml-front-matter')
 const ejs = require('ejs')
+const {runTransformation} = require("vue-codemod");
 
 class GeneratorAPI {
     /**
@@ -46,8 +47,8 @@ class GeneratorAPI {
      *  1,目录的绝对路径-
      *  2，template 映射源
      *  3，一个中间件函数
-     * @param additionalData
-     * @param ejsOptions
+     * @param additionalData 插件的 options 选项
+     * @param ejsOptions ejs options选项
      */
     render(source, additionalData = {}, ejsOptions = {}) {
         const baseDir = this.getCallDir()
@@ -55,9 +56,11 @@ class GeneratorAPI {
             source = path.resolve(baseDir, source)
             // 注入 apply
             this.injectFileMiddleware(async (file) => {
+                // 合并 插件的 options 选项
                 const data = this.resolveData(additionalData)
                 const files = await globby(['**/*'], {cwd: source, dot: true})
                 for (const rcPath of files) {
+                    // string 切成数组重写一些 特殊文件名，在以 / 拼接转 string
                     const targetPath = rcPath.split('/').map(filename => {
                         if (filename.charAt(0) === '_' && filename.charAt(1) !== '_') {
                             return `.${filename.slice(1)}`
@@ -104,7 +107,6 @@ class GeneratorAPI {
      * @param imports 语句
      */
     injectImports(file, imports) {
-        console.log('file',file);
         const _imports = (this.generator.imports[file] || (this.generator.imports[file] = new Set()));
         (Array.isArray(imports) ? imports : [imports]).forEach(imp => {
             _imports.add(imp)
@@ -134,7 +136,6 @@ class GeneratorAPI {
         return Object.assign({
             options: this.options,
             rootOptions: this.rootOptions,
-            plugins: this.pluginsData
         }, additionalData)
     }
 
@@ -146,6 +147,33 @@ class GeneratorAPI {
         let finalTemplate = content.trim() + `\n`
         return ejs.render(finalTemplate, data, ejsOptions)
     }
+    normalizePath (p) {
+        if (path.isAbsolute(p)) {
+            p = path.relative(this.generator.context, p)
+        }
+
+        return p.replace(/\\/g, '/')
+    }
+    transformScript (file, codemod, options) {
+        const normalizedPath = this.normalizePath(file)
+
+        this.injectFileMiddleware(files => {
+            if (typeof files[normalizedPath] === 'undefined') {
+                error(`Cannot find file ${normalizedPath}`)
+                return
+            }
+
+            files[normalizedPath] = runTransformation(
+                {
+                    path: this.resolve(normalizedPath),
+                    source: files[normalizedPath]
+                },
+                codemod,
+                options
+            )
+        })
+    }
+
 }
 
 module.exports = GeneratorAPI

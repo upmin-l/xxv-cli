@@ -13,6 +13,7 @@ module.exports = async function writeFileTree(dir, files, previousFiles, include
     Object.keys(files).forEach((name) => {
         if (include && !include.has(name)) return
         const filePath = path.join(dir, name)
+        console.log('filePath',filePath);
         fs.ensureDirSync(path.dirname(filePath))
         fs.writeFileSync(filePath, files[name])
     })

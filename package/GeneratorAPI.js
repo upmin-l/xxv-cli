@@ -59,6 +59,7 @@ class GeneratorAPI {
                 // 合并 插件的 options 选项
                 const data = this.resolveData(additionalData)
                 const files = await globby(['**/*'], {cwd: source, dot: true})
+                console.log('files',files);
                 for (const rcPath of files) {
                     // string 切成数组重写一些 特殊文件名，在以 / 拼接转 string
                     const targetPath = rcPath.split('/').map(filename => {
@@ -67,6 +68,9 @@ class GeneratorAPI {
                         }
                         if (filename.charAt(0) === '_' && filename.charAt(1) === '_') {
                             return `${filename.slice(1)}`
+                        }
+                        if (filename===additionalData.type){
+                            return `src/${filename}`
                         }
                         return filename
                     }).join('/')

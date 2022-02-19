@@ -5,5 +5,6 @@ exports.getPackageModules = () => {
         'vuex',
         'pinia',
         'router',
+        'typescript'
     ].map(file => require(`../plugInModules/${file}`))
 }

@@ -1,5 +1,8 @@
 # xxv-cli
-xxv-cli 是一个基于 [Vue3.0](https://v3.cn.vuejs.org/) 生态进行快速开发的完整系统，提供一套基于 Vue3、[thingJs](http://www.thingjs.com/guide/) 的完整 Web 项目解决方案，让开发者更加专注于业务逻辑的开发
+
+<p align="center"><img align="center" style="width:240px"  src="assets/u=1985291548,116451169&fm=224&app=112&f=JPEG.jpg"></p>
+
+> xxv-cli 是一个基于 [Vue3.0](https://v3.cn.vuejs.org/) 生态进行快速开发的完整系统，提供一套基于 Vue3、[thingJs](http://www.thingjs.com/guide/) 的完整 Web 项目解决方案，让开发者更加专注于业务逻辑的开发
 
 # 特性
 xxv-cli 集成实用的插件和开发工具，支持如下特性:
@@ -12,7 +15,7 @@ xxv-cli 集成实用的插件和开发工具，支持如下特性:
 - uearth 主题选择
 - geoJson 各类数据转换
 - 在线模型加载测试 
-# 项目示例
+# 图示
 
 ![img.png](assets/img.png)
 ![img.png](assets/img2.png)

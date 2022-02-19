@@ -2,6 +2,7 @@
 
 #### 项目目录结构
 
+```markdown
 ├── bin                   # node 执行文件
 │   ├── index.js                # xxv 命令 执行文件
 ├── package
@@ -38,3 +39,4 @@
 │   ├── ResolveMultistage       # 处理问答 工厂函数
 │   ├── SetupTemplate           #  执行依赖各个插件内部逻辑，语句的导入及最终模板的生成
 │   ├── utils                   # 公共方法
+```

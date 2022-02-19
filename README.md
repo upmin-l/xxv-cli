@@ -19,7 +19,19 @@ xxv-cli 集成实用的插件和开发工具，支持如下特性:
 - 一键打包部署
 - uearth 主题选择
 - geoJson 各类数据转换
-- 在线模型加载测试 
+- 在线模型加载测试
+
+# 安装
+在cmd 命令窗口 执行下列代码即可全局安装
+```shell
+npm install -g xxv-cli
+```
+# create
+通过 xxv create <app-name> 命令创建项目
+```shell
+xxv create test
+```
+
 # 图示
 
 ![img.png](assets/img.png)

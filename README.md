@@ -1,6 +1,25 @@
 # xxv-cli
+xxv-cli 是一个基于 [Vue3.0](https://v3.cn.vuejs.org/) 生态进行快速开发的完整系统，提供一套基于 Vue3、[thingJs](http://www.thingjs.com/guide/) 的完整 Web 项目解决方案，让开发者更加专注于业务逻辑的开发
 
-#### 项目目录结构
+# 特性
+xxv-cli 集成实用的插件和开发工具，支持如下特性:
+- [Vue3.0](https://v3.cn.vuejs.org/) & [Vite2](https://cn.vitejs.dev/)
+- 通过 create 命令可创建零配置的vue3+ thingJS 原型开发  
+- Jest 或者 Vitest 的 Vue 组件测试 
+- 自定义预选搭配 
+- 可自适应大屏、组件自动注册、全局样式文件自动引入、指定目录路由自动生成
+- 一键打包部署
+- uearth 主题选择
+- geoJson 各类数据转换
+- 在线模型加载测试 
+# 项目示例
+
+![img.png](assets/img.png)
+![img.png](assets/img2.png)
+![img.png](assets/img3.png)
+![img.png](assets/img4.png)
+
+# 项目目录结构
 
 ```markdown
 ├── bin                   # node 执行文件
@@ -40,3 +59,4 @@
 │   ├── SetupTemplate           #  执行依赖各个插件内部逻辑，语句的导入及最终模板的生成
 │   ├── utils                   # 公共方法
 ```
+

@@ -1,6 +1,6 @@
 # xxv-cli
 
-<p align="center"><img align="center" style="width:240px"  src="assets/u=1985291548,116451169&fm=224&app=112&f=JPEG.jpg"></p>
+<p align="center"><img align="center" style="width:240px"  src="assets/55127598.jpg"></p>
 <p align="center">
   <a href="https://github.com/upmin-l/xxv-cli/actions/workflows/ci.yml"><img src="https://github.com/originjs/origin.js/actions/workflows/ci.yml/badge.svg?branch=main" alt="Build Status"></a>
   <a href="https://www.npmjs.com/package/@originjs/cli"><img src="https://badgen.net/npm/v/@originjs/cli" alt="Version"></a>
@@ -10,7 +10,7 @@
 
 > xxv-cli 是一个基于 [Vue3.0](https://v3.cn.vuejs.org/) 生态进行快速开发的完整系统，提供一套基于 Vue3、[thingJs](http://www.thingjs.com/guide/) 的完整 Web 项目解决方案，让开发者更加专注于业务逻辑的开发
 
-# 特性
+## 特性
 xxv-cli 集成实用的插件和开发工具，支持如下特性:
 - [Vue3.0](https://v3.cn.vuejs.org/) & [Vite2](https://cn.vitejs.dev/)
 - 通过 create 命令可创建零配置的vue3+ thingJS 原型开发  
@@ -22,25 +22,29 @@ xxv-cli 集成实用的插件和开发工具，支持如下特性:
 - geoJson 各类数据转换
 - 在线模型加载测试
 
-# 安装
-在cmd 命令窗口 执行下列代码即可全局安装
+## 安装
+目前未发包，如果想使用请 clone 源码，在本地目录下使用以下命令:
+
 ```shell
-npm install -g xxv-cli
+npm link
 ```
-# create
+## create
 通过 xxv create <app-name> 命令创建项目
 ```shell
 xxv create test
 ```
+create 流程逻辑大致如下：
 
-# 图示
+![img.png](assets/img_1.png)
+
+## 图示
 
 ![img.png](assets/img.png)
 ![img.png](assets/img2.png)
 ![img.png](assets/img3.png)
 ![img.png](assets/img4.png)
 
-# 项目目录结构
+## 项目目录结构
 
 ```markdown
 ├── bin                   # node 执行文件

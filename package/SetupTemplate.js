@@ -53,16 +53,10 @@ module.exports = class SetupTemplate {
 
     async initPlugins() {
         const {rootOptions, invoking} = this
-        // console.log('plugins', this.plugins);
-        // for (const key of this.allPlugins) {
-        //     const {id, apply} = key
-        //     const api = new GeneratorAPI(id, this, {}, rootOptions)
-        //     await apply(api, {}, rootOptions, invoking)
-        // }
         for (const plugin of this.plugins) {
             const {id, apply, options} = plugin
             const api = new GeneratorAPI(id, this, options, rootOptions)
-            // 这里apply 执行的就是每个依赖入口  plugMode
+            // 这里apply 执行的就是每个依赖入口  cli-依赖 下 的 index.js
             await apply(api, options, rootOptions, invoking)
         }
     }
@@ -83,7 +77,7 @@ module.exports = class SetupTemplate {
 
 
     async resolveFiles() {
-
+        // 执行render 的 apply
         const files = this.files
         for (const middleware of this.fileMiddlewares) {
             await middleware(files, ejs.render)

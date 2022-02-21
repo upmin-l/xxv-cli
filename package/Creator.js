@@ -87,7 +87,7 @@ module.exports = class Creator {
                 'package.json': JSON.stringify(pkg, null, 2)
             })
             //依赖下载
-            // await pm.install();
+            await pm.install();
 
             info(`★ Invoking SetupTemplate...`)
             // //  获得插件依赖入口+

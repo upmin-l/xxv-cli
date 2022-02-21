@@ -1,9 +1,6 @@
 const descriptions = {
-  build: 'Compiles and minifies for production',
-  serve: 'Compiles and hot-reloads for development',
-  lint: 'Lints and fixes files',
-  'test:e2e': 'Run your end-to-end tests',
-  'test:unit': 'Run your unit tests'
+  dev: '启动项目',
+  build: '编译打包项目',
 }
 
 function printScripts (pkg, packageManager) {
@@ -22,13 +19,7 @@ function printScripts (pkg, packageManager) {
 module.exports = function generateReadme (pkg, packageManager) {
   return [
     `# ${pkg.name}\n`,
-    '## Project setup',
-    '```',
-    `${packageManager} install`,
-    '```',
     printScripts(pkg, packageManager),
-    '### Customize configuration',
-    'See [Configuration Reference](https://cli.vuejs.org/config/).',
     ''
   ].join('\n')
 }

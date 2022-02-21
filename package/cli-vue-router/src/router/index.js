@@ -8,13 +8,13 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: ()=>import('./views/home.vue')
+        component: ()=>import('../views/home.vue')
     },
 ]
 
 const router = createRouter({
 <%_ if (historyMode) { _%>
-history: createWebHistory(process.env.BASE_URL),
+history: createWebHistory(),
     <%_ } else { _%>
 history: createWebHashHistory(),
     <%_ } _%>
